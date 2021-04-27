@@ -19,7 +19,7 @@
 - [Ejercicio 2](#ejercicio-2)
   - [Datos](#datos)
   - [Recubrimiento](#recubrimiento)
-  - [Algoritmo](#algoritmo)
+  - [Algoritmo Con División y Conquista](#algoritmo-con-división-y-conquista)
 
 # Ejercicio 1
 
@@ -114,4 +114,31 @@ La demostración seguirá los siguientes pasos:
 
 - Como `(2^2k - 1) % 3 = 0`, podemos cubrir toda nuestra superficie de `n*n` metros cuadrados con baldosas de 'L' sin realizar cortes ⇒ Existe la solución al algorítmo. □
 
-## Algoritmo
+## Algoritmo con División y Conquista
+
+Antes de plantear el pseudocódigo, debemos explicar como funciona el algoritmo:
+
+```
+S = solutionSet() 
+
+function TileSolver(n, p, x, y):
+  
+  if (n == 2):
+    Completar el pequeño cuadrado con la baldosa en 'L' que falta.
+    # Siempre tendremos una baldosa ocupada, ya sea por una de 'L' que pusimos de la recursión 
+    # Anterior o por el sumidero.
+    return     
+
+  Ubicar una baldosa en 'L' en el centro de la superficie dada, es decir, en el middle(p). 
+  Hacerlo de tal forma que el cuadrante que posee el sumidero no se lleve un tercio de nuestra
+  baldosa en 'L'.
+  # Lo hacemos así para que cada cuadrante tenga una baldosa menos. Condición ya demostrada de ser
+  # necesaria para obtener una solución válida en cada cuadrante (y subcuadrante) del problema.
+
+  TileSolver(n/2, p.superiorIzquierdo, x, y)
+  TileSolver(n/2, p.superiorDerecho, x, y)
+  TileSolver(n/2, p.inferiorIzquierdo, x, y)
+  TileSolver(n/2, p.inferiorDerecho, x, y)
+
+  return
+```
