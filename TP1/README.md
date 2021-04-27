@@ -55,7 +55,8 @@ Esta aplicación del algoritmo resulta no devolver la solución óptima, pues el
 +---------------------------------------------------------------+
 ```
 
-Por lo tanto, como existe una solución mejor, podemos afirmar que el algorítmo no devuelve siempre la solución óptima. □
+Por lo tanto, como existe una solución mejor, podemos afirmar que el algorítmo no devuelve siempre la solución óptima. 
+<div align="right">□</div>
 
 ## Parte 3
 
@@ -91,7 +92,8 @@ Si `F(A[r-1]) <= F(O[r-1])` y `F(O[r-1]) <= S(O[r])` ⇒ `F(A[r-1]) <= S(O[r])`.
 
 Esta última inecuación significa que cuando nuestro algorítmo elige el pedido `A[r]` también estaba disponible para elegir al `O[r]`. Eso implica que, como el algorítmo seleccionó a `A[r]`, este "le convenía", es decir, finalizaba antes que `O[r]` ⇒ `F(A[r]) <= F(O[r])`. 
 
-Podemos hacer el cambio de variables `r = w` ⇒ `F(A[w]) <= F(O[w])` para todo `w in [1,k]` ⇒ `|A| = |O|` ⇒ `A = O` ⇒ Nuestra solución es óptima. □
+Podemos hacer el cambio de variables `r = w` ⇒ `F(A[w]) <= F(O[w])` para todo `w in [1,k]` ⇒ `|A| = |O|` ⇒ `A = O` ⇒ Nuestra solución es óptima. 
+<div align="right">□</div>
 
 # Ejercicio 2
 
@@ -116,7 +118,8 @@ La demostración seguirá los siguientes pasos:
 
 - Entonces, como se cumple la propiedad para `k = r` y `k = r+1` ⇒ La propiedad se cumple para todo `k`.
 
-- Como `(2^2k - 1) % 3 = 0`, podemos cubrir toda nuestra superficie de `n*n` metros cuadrados con baldosas de 'L' sin realizar cortes ⇒ Existe la solución al algorítmo. □
+- Como `(2^2k - 1) % 3 = 0`, podemos cubrir toda nuestra superficie de `n*n` metros cuadrados con baldosas de 'L' sin realizar cortes ⇒ Existe la solución al algorítmo. 
+<div align="right">□</div>
 
 ## Algoritmo con División y Conquista
 
@@ -126,7 +129,7 @@ Antes de plantear el pseudocódigo, debemos explicar como funciona el algoritmo:
 function TileSolver(n, p, x, y):
   
   if (n == 2):
-    Completar el pequeño cuadrado con la baldosa en 'L' que falta.
+    Completar el pequeño cuadrado con la baldosa en 'L' que falta en p.
     # Siempre tendremos una baldosa ocupada, ya sea por una de 'L' que pusimos de la recursión 
     # Anterior o por el sumidero.
     return     
@@ -179,6 +182,12 @@ Para el análisis temporal utilizaremos el [teorema maestro](https://en.wikipedi
 
 - Por el teorema maestro `f(n) = O(n^(log a/log b - e)), e > 0` ⇒ `T(n) = Θ(n^(log a/log b))` ⇒ Reemplazando, `T(n) = Θ(n^(log 4 / log 2))` ⇒ `T(n) = Θ(n^2)`. 
 
-Por lo tanto podemos acotar superior e inferiormente el tiempo del algorítmo con `T(n) = Θ(n^2)`. □
+Por lo tanto podemos acotar superior e inferiormente el tiempo del algorítmo con `T(n) = Θ(n^2)`. 
+<div align="right">□</div>
 
 ### Análisis Espacial
+
+Nuestro programa generará una matriz de exactamente `n^2` valores. A lo largo del algoritmo, las únicas asignaciones que hacemos a memoria ocurren cuando plantamos una baldosa en 'L' en la matriz. Por lo tanto, sabemos que el uso de memoria, en función de `n` estará doblemente acotado.
+
+Si definimos a `E(n)` como la función que evalua el tamaño que ocupa el algorítmo en función de `n` ⇒ `E(n) = Θ(n^2)`. 
+<div align="right">□</div>
