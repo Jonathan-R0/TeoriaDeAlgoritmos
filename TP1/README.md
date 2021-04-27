@@ -20,6 +20,10 @@
   - [Datos](#datos)
   - [Recubrimiento](#recubrimiento)
   - [Algoritmo Con División y Conquista](#algoritmo-con-división-y-conquista)
+  - [Relación de Recurrencia](#relación-de-recurrencia)
+  - [Complejidad Algorítmica](#complejidad-algorítmica)
+    - [Análisis Temporal](#análisis-temporal)
+    - [Análisis Espacial](#análisis-espacial)
 
 # Ejercicio 1
 
@@ -140,3 +144,41 @@ function TileSolver(n, p, x, y):
 
   return
 ```
+
+## Relación de Recurrencia 
+
+Como utilizamos un algoritmo de División y Conquista podemos plantear la siguiente relación de recurrencia para analizar el tiempo que tarda el algoritmo:
+
+```
+T(n) = a*T(n/b) + f(n)
+```
+
+Siendo a,b constantes que representan las llamadas recursivas y las partes en que se dividen el algorítmo respectivamente. Para nuestro problema `a = 4` por las 4 llamadas recursivas y `b = 2` pues son las partes en que dividimos el problema. 
+
+Hasta ahora tenemos: 
+
+```
+T(n) = 4*T(n/2) + f(n)
+```
+
+Pero no conocemos a `f(n)` que representa el costo del resto de operaciones del algoritmo. Sabemos que no realizamos ningún tipo de "operación pesada", es decir, verificar un caso base y ubicar una baldosa en el medio son operaciones `O(1)`. Esto implica que la relación de recurrencia resulta ser:
+
+```
+T(n) = 4*T(n/2) + O(1)
+```
+
+## Complejidad Algorítmica
+
+### Análisis Temporal
+
+Para el análisis temporal utilizaremos el [teorema maestro](https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms)). 
+
+- Primero vemos que como `f(n) = O(1)`, podremos encontrar la forma de `T(n)` por el teorema maestro, si logramos afirmar que nuestra cota superior tenga la siguiente forma `O(1) = O(n^(log a/log b - e)), e > 0`.
+
+- Luego recordamos que `a = 4 & b = 2` ⇒ `O(1) = O(n^(log 4 / log 2 - e)) = O(n^(2-e))` ⇒ `1 = 2 - e` ⇒ `e = 1` ⇒ Se cumple la condición que pediamos antes; esta cota permite entonces llegar a un resultado.
+
+- Por el teorema maestro `f(n) = O(n^(log a/log b - e)), e > 0` ⇒ `T(n) = Θ(n^(log a/log b))` ⇒ Reemplazando, `T(n) = Θ(n^(log 4 / log 2))` ⇒ `T(n) = Θ(n^2)`. 
+
+Por lo tanto podemos acotar superior e inferiormente el tiempo del algorítmo con `T(n) = Θ(n^2)`. □
+
+### Análisis Espacial
