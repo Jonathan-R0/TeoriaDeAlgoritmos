@@ -1,3 +1,21 @@
+# Teoría de Algoritmos
+## Trabajo Práctico 1 
+
+| Padrón | Alumno                    |
+|--------|---------------------------|
+| 104105 | Jonathan David Rosenblatt |
+| 103924 | Joaquín Fontela           |
+| 104330 | Agustín Ghersi            |
+| 104429 | Thiago Kovnat             |
+
+# Tabla de Contenidos
+
+- [Parte 1](#parte-1)
+- [Parte 3](#parte-3)
+  - [Complejidad Temporal](#complejidad-temporal)
+  - [Complejidad Espacial](#complejidad-espacial)
+- [Parte 4](#parte-4)
+
 # Parte 1
 
 1) Primero vamos a demostrar lo pedido con un contraejemplo. La solución propuesta por la administración no es óptima, pues siguiendo el algorítmo introducido podriamos llegar a la siguiente situación:
