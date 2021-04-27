@@ -25,7 +25,7 @@ class PlanificadorGreedy:
         finalizacion = self.listaDeContratos[0].t_final
 
         for contrato in self.listaDeContratos:
-            if contrato.t_inicio > finalizacion:
+            if contrato.t_inicio >= finalizacion:
                 cronograma.append(contrato)
                 finalizacion = contrato.t_final
 
