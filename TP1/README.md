@@ -119,8 +119,6 @@ La demostración seguirá los siguientes pasos:
 Antes de plantear el pseudocódigo, debemos explicar como funciona el algoritmo:
 
 ```
-S = solutionSet() 
-
 function TileSolver(n, p, x, y):
   
   if (n == 2):
