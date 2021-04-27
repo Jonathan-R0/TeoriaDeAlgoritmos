@@ -19,13 +19,17 @@
 - [Ejercicio 2](#ejercicio-2)
   - [Datos](#datos)
   - [Recubrimiento](#recubrimiento)
-  - [Algoritmo](#algoritmo)
+  - [Algoritmo Con División y Conquista](#algoritmo-con-división-y-conquista)
+  - [Relación de Recurrencia](#relación-de-recurrencia)
+  - [Complejidad Algorítmica](#complejidad-algorítmica)
+    - [Análisis Temporal](#análisis-temporal)
+    - [Análisis Espacial](#análisis-espacial)
 
 # Ejercicio 1
 
 ## Parte 1
 
-1) Primero vamos a demostrar lo pedido con un contraejemplo. La solución propuesta por la administración no es óptima, pues siguiendo el algorítmo introducido podriamos llegar a la siguiente situación:
+Primero vamos a demostrar lo pedido con un contraejemplo. La solución propuesta por la administración no es óptima, pues siguiendo el algorítmo introducido podriamos llegar a la siguiente situación:
 
 Si tenemos la siguiente distribución de contratos:
 
@@ -51,7 +55,8 @@ Esta aplicación del algoritmo resulta no devolver la solución óptima, pues el
 +---------------------------------------------------------------+
 ```
 
-Por lo tanto, como existe una solución mejor, podemos afirmar que el algorítmo no devuelve siempre la solución óptima. □
+Por lo tanto, como existe una solución mejor, podemos afirmar que el algorítmo no devuelve siempre la solución óptima. 
+<div align="right">□</div>
 
 ## Parte 3
 
@@ -87,7 +92,8 @@ Si `F(A[r-1]) <= F(O[r-1])` y `F(O[r-1]) <= S(O[r])` ⇒ `F(A[r-1]) <= S(O[r])`.
 
 Esta última inecuación significa que cuando nuestro algorítmo elige el pedido `A[r]` también estaba disponible para elegir al `O[r]`. Eso implica que, como el algorítmo seleccionó a `A[r]`, este "le convenía", es decir, finalizaba antes que `O[r]` ⇒ `F(A[r]) <= F(O[r])`. 
 
-Podemos hacer el cambio de variables `r = w` ⇒ `F(A[w]) <= F(O[w])` para todo `w in [1,k]` ⇒ `|A| = |O|` ⇒ `A = O` ⇒ Nuestra solución es óptima. □
+Podemos hacer el cambio de variables `r = w` ⇒ `F(A[w]) <= F(O[w])` para todo `w in [1,k]` ⇒ `|A| = |O|` ⇒ `A = O` ⇒ Nuestra solución es óptima. 
+<div align="right">□</div>
 
 # Ejercicio 2
 
@@ -112,6 +118,76 @@ La demostración seguirá los siguientes pasos:
 
 - Entonces, como se cumple la propiedad para `k = r` y `k = r+1` ⇒ La propiedad se cumple para todo `k`.
 
-- Como `(2^2k - 1) % 3 = 0`, podemos cubrir toda nuestra superficie de `n*n` metros cuadrados con baldosas de 'L' sin realizar cortes ⇒ Existe la solución al algorítmo. □
+- Como `(2^2k - 1) % 3 = 0`, podemos cubrir toda nuestra superficie de `n*n` metros cuadrados con baldosas de 'L' sin realizar cortes ⇒ Existe la solución al algorítmo. 
+<div align="right">□</div>
 
-## Algoritmo
+## Algoritmo con División y Conquista
+
+Antes de plantear el pseudocódigo, debemos explicar como funciona el algoritmo:
+
+```
+function TileSolver(n, p, x, y):
+  
+  if (n == 2):
+    Completar el pequeño cuadrado con la baldosa en 'L' que falta en p.
+    # Siempre tendremos una baldosa ocupada, ya sea por una de 'L' que pusimos de la recursión 
+    # Anterior o por el sumidero.
+    return     
+
+  Ubicar una baldosa en 'L' en el centro de la superficie dada, es decir, en el middle(p). 
+  Hacerlo de tal forma que el cuadrante que posee el sumidero no se lleve un tercio de nuestra
+  baldosa en 'L'.
+  # Lo hacemos así para que cada cuadrante tenga una baldosa menos. Condición ya demostrada de ser
+  # necesaria para obtener una solución válida en cada cuadrante (y subcuadrante) del problema.
+
+  TileSolver(n/2, p.superiorIzquierdo, x, y)
+  TileSolver(n/2, p.superiorDerecho, x, y)
+  TileSolver(n/2, p.inferiorIzquierdo, x, y)
+  TileSolver(n/2, p.inferiorDerecho, x, y)
+
+  return
+```
+
+## Relación de Recurrencia 
+
+Como utilizamos un algoritmo de División y Conquista podemos plantear la siguiente relación de recurrencia para analizar el tiempo que tarda el algoritmo:
+
+```
+T(n) = a*T(n/b) + f(n)
+```
+
+Siendo a,b constantes que representan las llamadas recursivas y las partes en que se dividen el algorítmo respectivamente. Para nuestro problema `a = 4` por las 4 llamadas recursivas y `b = 2` pues son las partes en que dividimos el problema. 
+
+Hasta ahora tenemos: 
+
+```
+T(n) = 4*T(n/2) + f(n)
+```
+
+Pero no conocemos a `f(n)` que representa el costo del resto de operaciones del algoritmo. Sabemos que no realizamos ningún tipo de "operación pesada", es decir, verificar un caso base y ubicar una baldosa en el medio son operaciones `O(1)`. Esto implica que la relación de recurrencia resulta ser:
+
+```
+T(n) = 4*T(n/2) + O(1)
+```
+
+## Complejidad Algorítmica
+
+### Análisis Temporal
+
+Para el análisis temporal utilizaremos el [teorema maestro](https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms)). 
+
+- Primero vemos que como `f(n) = O(1)`, podremos encontrar la forma de `T(n)` por el teorema maestro, si logramos afirmar que nuestra cota superior tenga la siguiente forma `O(1) = O(n^(log a/log b - e)), e > 0`.
+
+- Luego recordamos que `a = 4 & b = 2` ⇒ `O(1) = O(n^(log 4 / log 2 - e)) = O(n^(2-e))` ⇒ `1 = 2 - e` ⇒ `e = 1` ⇒ Se cumple la condición que pediamos antes; esta cota permite entonces llegar a un resultado.
+
+- Por el teorema maestro `f(n) = O(n^(log a/log b - e)), e > 0` ⇒ `T(n) = Θ(n^(log a/log b))` ⇒ Reemplazando, `T(n) = Θ(n^(log 4 / log 2))` ⇒ `T(n) = Θ(n^2)`. 
+
+Por lo tanto podemos acotar superior e inferiormente el tiempo del algorítmo con `T(n) = Θ(n^2)`. 
+<div align="right">□</div>
+
+### Análisis Espacial
+
+Nuestro programa generará una matriz de exactamente `n^2` valores. A lo largo del algoritmo, las únicas asignaciones que hacemos a memoria ocurren cuando plantamos una baldosa en 'L' en la matriz. Por lo tanto, sabemos que el uso de memoria, en función de `n` estará doblemente acotado.
+
+Si definimos a `E(n)` como la función que evalua el tamaño que ocupa el algorítmo en función de `n` ⇒ `E(n) = Θ(n^2)`. 
+<div align="right">□</div>
