@@ -12,7 +12,8 @@ class PlanificadorGreedy:
 
     def agregarContrato(self, contrato):
         if not isinstance(contrato, Contrato):
-            raise Exception("Solo se pueden agregar objetos de tipo Contrato.")
+            raise Exception(
+                f"Solo se pueden agregar objetos de tipo Contrato, no de tipo {type(contrato)}.")
         self.listaDeContratos.append(contrato)
 
     def obtenerCronogramaConMayorCantidadDeContratos(self):
