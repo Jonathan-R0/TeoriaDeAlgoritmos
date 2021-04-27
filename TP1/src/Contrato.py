@@ -1,6 +1,6 @@
 class Contrato:
 
-    def __init__(self, t_inicio, t_final):
+    def __init__(self, t_inicio, t_final, nombre = " "):
         if not (isinstance(t_inicio, int) or isinstance(t_inicio, float)):
             raise Exception(
                 f"t_inicio has to be of type 'int' or 'float', not {type(t_inicio)}.")
@@ -13,6 +13,7 @@ class Contrato:
             raise Exception("t_inicio value has to be greater or equal to 0.")
         self.t_inicio = t_inicio
         self.t_final = t_final
+        self.nombre = nombre
 
     def __str__(self):
-        return f'Contrato desde {self.t_inicio} hasta {self.t_final}.'
+        return f'Contrato desde {self.t_inicio} hasta {self.t_final} a nombre de {self.nombre}.'
