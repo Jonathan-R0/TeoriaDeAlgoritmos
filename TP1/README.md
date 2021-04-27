@@ -63,3 +63,21 @@ Analizar la complejidad espacial del algoritmo no resulta muy complicado, pues e
 # Parte 4
 
 Aquí demostraremos que la solución programada por nosotros es óptima.
+
+Para esto diremos que nuestro conjunto de pedidos es `P` tal que `|P| = n`, y al ejecutar nuestro algoritmo el resultado del mismo nos devuelve `A = {A[1], ..., A[k]}` tal que `|A| = k`. También diremos que la solución óptima al problema se denominará `O = {O[1], ..., O[m]}` tal que `|O| = m`.
+
+Nosotros queremos demostrar que `A = O`, que es equivalente a `|A| = |O|`. 
+
+También tendremos una función `F`, la cual recibe un pedido y devuelve el horario en el que este finaliza y la función `S` que hace lo mismo que su contraparte pero para el horario de inicio del pedido.
+
+En particular pedimos que el tiempo de finalización de cada tarea que elige nuestro algoritmo sea mejor o igual al que da la solución óptima ⇒ Pedir que `|A| = |O|` es equivalente a pedir `F(A[w]) <= F(O[w])` para todo `w in [1,k]`. 
+
+El resto de la demostración se realizará con inducción. Primero empezamos con `z = 1`. Acá sabemos que `A[1]` (es decir, la primera tarea de nuestro resultado) terminá antes o a la vez que `O[1]` por la naturaleza de nuestro algoritmo ⇒ `F(A[1]) <= F(O[1])`.
+
+Ahora asumimos que con `r-1 in [2,k]` la condición se cumple, es decir, `F(A[r-1]) <= F(O[r-1])` (hipótesis inductiva).
+
+Si `F(A[r-1]) <= F(O[r-1])` y `F(O[r-1]) <= S(O[r])` ⇒ `F(A[r-1]) <= S(O[r])`.
+
+Esta última inecuación significa que cuando nuestro algorítmo elige el pedido `A[r]` también estaba disponible para elegir al `O[r]`. Eso implica que, como el algorítmo seleccionó a `A[r]`, este "le convenía", es decir, este finalizaba antes que `O[r]` ⇒ `F(A[r]) <= F(O[r])`. 
+
+Podemos hacer el cambio de variables `r = w` ⇒ `F(A[w]) <= F(O[w])` para todo `w in [1,k]` ⇒ `|A| = |O|` ⇒ `A = O` ⇒ Nuestra solución es óptmiza. □
