@@ -26,4 +26,22 @@ Esta aplicación del algoritmo resulta no devolver la solución óptima, pues el
 +---------------------------------------------------------------+
 ```
 
-Por lo tanto, como existe una solución mejor, podemos afirmar que el algorítmo no devuelve siempre la solución óptima. ∎
+Por lo tanto, como existe una solución mejor, podemos afirmar que el algorítmo no devuelve siempre la solución óptima. □
+
+# Parte 3
+
+## Complejidad Temporal
+
+Para analizar la complejidad temporal podemos ver lo que ocurre en el pseudocódigo del algoritmo:
+
+- Primero ordenamos el conjunto de pedidos. Esto, con un buen algorítmo de ordenado, será `O(n*log(n))`
+- Luego entramos en un ciclo donde loopeamos por cada elemento del conjunto de pedidos de tamaño `n`, (y todas las operaciones interna al mismo son `O(1)`) lo cual hace que el mismo sea `O(n)`
+- Por lo tanto la complejidad temporal total del algoritmo será `O(n*log(n)) + O(n)` lo cual se reduce a `O(n*log(n))` por propiedades de la cota [_Big O_](#https://en.wikipedia.org/wiki/Big_O_notation).
+
+## Complejidad Espacial
+
+Analizar la complejidad espacial del algoritmo no resulta muy complicado, pues el set de soluciones, en el peor caso, tendrá tantos elemenos como pedidos ingresados. Esto podría ocurrir si, por ejemplo, todos los pedidos son consecutivos unos a otros y estos son todos compatibles entre si. Por lo tanto, la complejidad espacial es de `O(n)`.
+
+# Parte 4
+
+Aquí demostraremos que la solución programada por nosotros es óptima.
