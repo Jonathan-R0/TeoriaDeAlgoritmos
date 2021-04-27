@@ -17,6 +17,9 @@
     - [Complejidad Espacial](#complejidad-espacial)
   - [Parte 4](#parte-4)
 - [Ejercicio 2](#ejercicio-2)
+  - [Datos](#datos)
+  - [Recubrimiento](#recubrimiento)
+  - [Algoritmo](#algoritmo)
 
 # Ejercicio 1
 
@@ -111,3 +114,4 @@ La demostración seguirá los siguientes pasos:
 
 - Como `(2^2k - 1) % 3 = 0`, podemos cubrir toda nuestra superficie de `n*n` metros cuadrados con baldosas de 'L' sin realizar cortes ⇒ Existe la solución al algorítmo. □
 
+## Algoritmo
