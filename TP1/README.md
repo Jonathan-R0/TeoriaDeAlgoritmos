@@ -1,25 +1,29 @@
+# Parte 1
+
 1) Primero vamos a demostrar lo pedido con un contraejemplo. La solución propuesta por la administración no es óptima, pues siguiendo el algorítmo introducido podriamos llegar a la siguiente situación:
 
 Si tenemos la siguiente distribución de contratos:
 
 - Contrato A: Lunes 9am hasta la 1pm (duración 4 hs)
 - Contrato B: Lunes 2pm hasta las 6pm (duración 4 hs)
-- Contrato C: Lunes 7am hasta las 5pm (duración 10 hs)
-- Contrato D: Lunes 5pm hasta las 10pm (duración 5 hs)
+- Contrato C: Lunes 7am hasta las 12am (duración 5 hs)
+- Contrato D: Lunes 12am hasta las 5pm (duración 6 hs)
+- Contrato E: Lunes 5pm hasta las 10pm (duración 5 hs)
 
-El algorítmo tomaría primero el contrato A pues es el que dura menos. Eso hace que quiera luego tomar el contrato B por sobre el contrato C (pues este ya arrancó antes) y el D (pues este dura más que el B) y finalizará ya que no posee más contratos para adquirir.
+El algorítmo tomaría primero el contrato A pues es el que comienza antes que dura menos. Por lo tanto luego podrá elegir entre B y E para continuar (el resto no, pues se superponen y son incompatibles). Terminará eligiendo el contrato B pues dura menos que el contrato E y luego terminará la ejecución del algoritmo pues no tendrá más tareas compatibles para aceptar.
 
-Esta aplicación del algoritmo resulta no devolver la solución óptima pues 
+Esta aplicación del algoritmo resulta no devolver la solución óptima, pues elegir los contratos C, D y E brindaría un total de contratos (y horas) mayor al que brinda A y B.
 
 ```
 +---------------------------------------------------------------+
-             |     Lunes     | |     Lunes     |            
-             |   9am hasta   | |   2pm hasta   |  
-             |    la  1pm    | |    las 6pm    |
+             |     Lunes     |    |     Lunes     |            
+             |   9am hasta   |    |   2pm hasta   |  
+             |    la  1pm    |    |    las 6pm    |
 +---------------------------------------------------------------+
-        |          Lunes          |       Lunes      |
-        |        7am hasta        |    5pm  hasta    |  
-        |         las 5pm         |     las 10pm     |
+        |    Lunes     |     Lunes     |      Lunes      |
+        |  7am  hasta  |  12am  hasta  |   5pm  hasta    |  
+        |   las 12am   |    las 5pm    |    las 10pm     |
 +---------------------------------------------------------------+
 ```
 
+Por lo tanto, como existe una solución mejor, podemos afirmar que el algorítmo no devuelve siempre la solución óptima. ∎
