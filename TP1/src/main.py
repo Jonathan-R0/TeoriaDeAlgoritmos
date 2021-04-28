@@ -1,3 +1,4 @@
+import sys
 from Contrato import Contrato
 from PlanificadorGreedy import PlanificadorGreedy
 from Parseador import Parseador
@@ -5,7 +6,7 @@ from Parseador import Parseador
 
 def main():
 
-    parseador = Parseador("TestCases/Test4.txt")
+    parseador = Parseador(sys.argv[1])
     contratos = parseador.getTodosLosContratos()
 
     planificador = PlanificadorGreedy(contratos)

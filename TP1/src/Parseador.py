@@ -1,6 +1,7 @@
 from Contrato import Contrato
 import sys
 
+
 class Parseador():
 
     def __init__(self, filepath):
@@ -10,7 +11,7 @@ class Parseador():
         """
         if not filepath:
             raise Exception("Es necesario proveer la ruta a un archivo")
-        
+
         try:
             self.file = open(filepath, "r")
         except FileNotFoundError:
@@ -31,12 +32,12 @@ class Parseador():
         t_inicio = int(tokens[1])
         t_final = int(tokens[2])
 
-
         if t_final < t_inicio:
             t_final += 168
 
-        if (t_final - t_inicio) >= 168:
-            print("Los contratos no pueden exceder la duracion de una semana, omitiendo...", file = sys.stderr)
+        if (t_final - t_inicio) > 168:
+            print(
+                "Los contratos no pueden exceder la duracion de una semana, omitiendo...", file=sys.stderr)
             return None
 
         return Contrato(t_inicio, t_final, nombre)
@@ -64,5 +65,3 @@ class Parseador():
         """
         if self.file:
             self.file.close()
-
-
