@@ -16,5 +16,12 @@ def main():
         print(contrato)
 
 
+def timeTest(iterations):
+    print(iterations)
+
+
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) > 2 and sys.argv[1] == "t":
+        timeTest(sys.argv[2])
+    else:
+        main()
