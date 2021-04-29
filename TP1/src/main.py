@@ -2,6 +2,7 @@ import sys
 from Contrato import Contrato
 from PlanificadorGreedy import PlanificadorGreedy
 from Parseador import Parseador
+from StressTester import Tester
 
 
 def main():
@@ -17,7 +18,8 @@ def main():
 
 
 def timeTest(iterations):
-    print(iterations)
+    tester = StressTester(iterations)
+    tester.run()
 
 
 if __name__ == "__main__":

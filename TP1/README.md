@@ -12,10 +12,13 @@
 
 - [Ejercicio 1](#ejercicio-1)
   - [Parte 1](#parte-1)
+  - [Parte 2](https://github.com/Jonathan-R0/TeoriaDeAlgoritmos/blob/master/TP1/src/PlanificadorGreedy.py)
   - [Parte 3](#parte-3)
     - [Complejidad Temporal](#complejidad-temporal)
     - [Complejidad Espacial](#complejidad-espacial)
   - [Parte 4](#parte-4)
+  - [Parte 5](https://github.com/Jonathan-R0/TeoriaDeAlgoritmos/blob/master/TP1/src/PlanificadorGreedyTest.py)
+  - [Parte 6](#parte-6)
 - [Ejercicio 2](#ejercicio-2)
   - [Datos](#datos)
   - [Recubrimiento](#recubrimiento)
@@ -67,8 +70,6 @@ Para analizar la complejidad temporal podemos ver lo que ocurre en el pseudocód
 - Primero ordenamos el conjunto de pedidos. Esto, con un buen algorítmo de ordenado, será `O(n*log(n))`
 - Luego entramos en un ciclo donde loopeamos por cada elemento del conjunto de pedidos de tamaño `n`, (y todas las operaciones interna al mismo son `O(1)`) lo cual hace que el mismo sea `O(n)`
 - Por lo tanto la complejidad temporal total del algoritmo será `O(n*log(n)) + O(n)` lo cual se reduce a `O(n*log(n))` por propiedades de la cota [_Big O_](https://en.wikipedia.org/wiki/Big_O_notation).
-- Podemos visualizar los datos en el siguiente gráfico:
-![title](images/timePlot.png)
 
 ### Complejidad Espacial
 
@@ -96,6 +97,12 @@ Esta última inecuación significa que cuando nuestro algorítmo elige el pedido
 
 Podemos hacer el cambio de variables `r = w` ⇒ `F(A[w]) <= F(O[w])` para todo `w in [1,k]` ⇒ `|A| = |O|` ⇒ `A = O` ⇒ Nuestra solución es óptima. 
 <div align="right">□</div>
+
+## Parte 6 
+
+Se puede apreciar en el siguiente ejemplo gráfico, cómo a medida que aumentan la cantidad de contratos, la curva que mappea al tiempo que tarda el algorítmo se asemeja a un `y = x*log(x)`.
+
+![title](images/timePlotTransparent.png)
 
 # Ejercicio 2
 
