@@ -67,6 +67,8 @@ Para analizar la complejidad temporal podemos ver lo que ocurre en el pseudocód
 - Primero ordenamos el conjunto de pedidos. Esto, con un buen algorítmo de ordenado, será `O(n*log(n))`
 - Luego entramos en un ciclo donde loopeamos por cada elemento del conjunto de pedidos de tamaño `n`, (y todas las operaciones interna al mismo son `O(1)`) lo cual hace que el mismo sea `O(n)`
 - Por lo tanto la complejidad temporal total del algoritmo será `O(n*log(n)) + O(n)` lo cual se reduce a `O(n*log(n))` por propiedades de la cota [_Big O_](https://en.wikipedia.org/wiki/Big_O_notation).
+- Podemos visualizar los datos en el siguiente gráfico:
+![title](images/timePlot.png)
 
 ### Complejidad Espacial
 
