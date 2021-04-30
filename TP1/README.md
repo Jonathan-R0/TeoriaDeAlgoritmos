@@ -187,7 +187,7 @@ Para el análisis temporal utilizaremos el [teorema maestro](https://en.wikipedi
 
 - Primero vemos que como `f(n) = O(1)`, podremos encontrar la forma de `T(n)` por el teorema maestro, si logramos afirmar que nuestra cota superior tenga la siguiente forma `O(1) = O(n^(log a/log b - e)), e > 0`.
 
-- Luego recordamos que `a = 4 & b = 2` ⇒ `O(1) = O(n^(log 4 / log 2 - e)) = O(n^(2-e))` ⇒ `1 = 2 - e` ⇒ `e = 1` ⇒ Se cumple la condición que pediamos antes; esta cota permite entonces llegar a un resultado.
+- Luego recordamos que `a = 4 & b = 2` ⇒ `O(1) = O(n^0) = O(n^(log 4 / log 2 - e)) = O(n^(2-e))` ⇒ `0 = 2 - e` ⇒ `e = 2` ⇒ Se cumple la condición que pediamos antes; esta cota permite entonces llegar a un resultado.
 
 - Por el teorema maestro `f(n) = O(n^(log a/log b - e)), e > 0` ⇒ `T(n) = Θ(n^(log a/log b))` ⇒ Reemplazando, `T(n) = Θ(n^(log 4 / log 2))` ⇒ `T(n) = Θ(n^2)`. 
 
