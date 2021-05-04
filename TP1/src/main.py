@@ -15,11 +15,5 @@ def main():
     for contrato in schedule:
         print(contrato)
 
-
-def timeTest(iterations):
-    tester = StressTester(iterations)
-    tester.run()
-
-
 if __name__ == "__main__":
     main()
