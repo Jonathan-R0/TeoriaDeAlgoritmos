@@ -22,11 +22,22 @@ class Contrato:
         """
         return f'Contrato desde {self.t_inicio} hasta {self.t_final} a nombre de {self.nombre}.'
 
-    def superponeCon(self, finalizacion):
+    def perteneceA(self, tiempo):
+        return (self.t_inicio < tiempo) and (self.t_final > tiempo)
+
+    def superponeCon(self, other):
         """ 
-            Devuelve true si el contrato se superpone con otro dado el tiempo de finalización del ultimo.
+            Devuelve true si el contrato se superpone con otro contrato.
         """
-        if self.t_final < 168:
-            return self.t_inicio < finalizacion
+
+        if not other:
+            return False
+        if(self.t_inicio > self.t_final) and (other.t_inicio > other.t_final):
+            return self.t_final + 168 > other.t_inicio
+        elif (self.t_inicio > self.t_final) or (other.t_inicio > other.t_final):
+            return (self.t_inicio < other.t_final or self.t_final > other.t_inicio)
         else:
-            return (self.t_final - 168) < finalizacion
+            return self.t_inicio < other.t_final
+
+        
+        

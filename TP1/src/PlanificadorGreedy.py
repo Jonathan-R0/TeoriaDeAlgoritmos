@@ -22,23 +22,37 @@ class PlanificadorGreedy:
                 f"Solo se pueden agregar objetos de tipo Contrato, no de tipo {type(contrato)}.")
         self.listaDeContratos.append(contrato)
 
+    def intervalScheduling(self, restrict = None):
+        """
+            Genera un interval scheduling con la restriccion de que restrict pertenezca al conjunto.
+        """
+
+        cronograma = []
+        cronograma.append(restrict)
+        ultimaTarea = None
+        for tarea in self.listaDeContratos:
+            if not restrict.superponeCon(tarea) and tarea != restrict:
+                if not tarea.superponeCon(ultimaTarea):
+                    cronograma.append(tarea)
+                    ultimaTarea = tarea
+
+        return cronograma
+
     def obtenerCronogramaConMayorCantidadDeContratos(self):
         """ 
             Devuelve el cronograma optimo siguiendo el algoritmo de task-scheduling.
         """
-        cronograma = []
+        bestCronograma = []
         if not self.listaDeContratos:
-            return cronograma
+            return bestCronograma
 
         self.listaDeContratos.sort(key=lambda c: c.t_final)
-        cronograma.append(self.listaDeContratos[0])
-        finalizacion = self.listaDeContratos[0].t_final
+        
+        for tarea in self.listaDeContratos:
+            cronograma = self.intervalScheduling(restrict = tarea)
+            if(len(cronograma) > len(bestCronograma)):
+                bestCronograma = cronograma 
 
-        for contrato in self.listaDeContratos[1:]:
-            if not contrato.superponeCon(finalizacion):
-                cronograma.append(contrato)
-                finalizacion = contrato.t_final
-
-        return cronograma
+        return bestCronograma
 
     
