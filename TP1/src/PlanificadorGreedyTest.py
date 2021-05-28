@@ -93,8 +93,9 @@ class PlanificadorGreedyTest(unittest.TestCase):
         c2 = Contrato(81, 102)
         c3 = Contrato(140, 10)
         p = PlanificadorGreedy([c1, c2, c3])
-        expected = [c3, c2]
+        expected = [c2, c1]
         cronograma = p.obtenerCronogramaConMayorCantidadDeContratos()
+        self.printDif(cronograma, expected)
         self.assertCountEqual(cronograma, expected)
 
     def test7PlanificadorCiclico(self):

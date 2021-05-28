@@ -30,14 +30,15 @@ class Contrato:
             Devuelve true si el contrato se superpone con otro contrato.
         """
 
+        """
+        print(self)
+        print(other)
+        print(f"{other.t_inicio} < {self.t_final} or {other.t_final} > {self.t_inicio}")
+        """
         if not other:
             return False
-        if(self.t_inicio > self.t_final) and (other.t_inicio > other.t_final):
-            return self.t_final + 168 > other.t_inicio
-        elif (self.t_inicio > self.t_final) or (other.t_inicio > other.t_final):
-            return (self.t_inicio < other.t_final or self.t_final > other.t_inicio)
-        else:
-            return self.t_inicio < other.t_final
+
+        return other.t_inicio < self.t_final or other.t_final > self.t_inicio
 
         
         
