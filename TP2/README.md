@@ -184,3 +184,15 @@ Jugador 2:
 Cartas elegidas: 7,1
 Puntos sumados: 8
 ```
+
+# Ejercicio 2
+
+Se tiene una red de flujo G(V,E) con s como fuente y t como sumidero.
+
+Por la propiedad de corte de grafo, sabemos que una cota superior de mensajes a enviar hasta el agente T es la cantidad de mensajes que se pueden enviar desde la agencia S.
+
+Conociendo la máxima cantidad de mensajes sin repetir agentes que se pueden enviar desde la agencia hasta el agente destino, se calcula cual es el 30% de esa cantidad, siendo esta la cantidad (redondeando para arriba) de mensajes necesarios a suprimir por parte del enemigo.
+
+Conociendo esto, se suprime un agente del grafo y se evalúa cuantos mensajes es posible enviar sin el agente el cuestión. Esto se repite para cada agente de la agencia y el rival eliminara aquel agente que minimice la cantidad de mensajes que puede enviar la agencia al agente T.
+
+Este proceso se repite hasta que la cantidad de mensajes que puede enviar la agencia sea menor al 70% de la cantidad original, minimizando de esta forma la cantidad de agentes a neutralizar por parte del rival y maximizando la cantidad de mensajes que no pueden enviarse al eliminar a un agente de la red.
