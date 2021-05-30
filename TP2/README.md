@@ -187,9 +187,19 @@ Puntos sumados: 8
 
 # Ejercicio 2
 
-Se tiene una red de flujo $G(V,E)$ con $s$ como fuente y $t$ como sumidero.
+## Parte 1
 
-Por la propiedad de corte de grafo, sabemos que una cota superior de mensajes a enviar hasta el agente T es la cantidad de mensajes que se pueden enviar desde la agencia S.
+Se tiene una red de flujo G(V,E) con s como fuente y t como sumidero: s sería la agencia y t seria el agente destino. Se remueve cualquier arista saliente de t para poder utilizar una red de flujo.
+
+El primer problema que se tiene que resolver, es como un vertice (un espia) solo puede ser utilizado una sola vez por la agencia. Lo que queremos encontrar es la cantidad maxima de caminos vertice-disjuntos que hay en el grafo. Este problema se puede pasar facilmente a encontrar la mayor cantidad de caminos arista-disjuntos en un grafo. Lo que debemos hacer es descomponer cada vertice (salvo s y t) en dos vertices: Un vertice que "reciba" todos los mensajes y otro que "emita" todos los mensajes. Luego, simplemente conectamos estos dos vertices por una arista de capacidad 1, asegurandonos que cada agente solo se pueda utilizar unicamente una vez.
+
+Asignandole una capacidad de 1 a cada arista, al aplicar un algoritmo que nos de el flujo maximo el resultado será la cantidad de caminos arista-disjuntos que hay en el grafo, y dado que reducimos nuestro problema original a este en un paso anterior, podemos determinar que la cantidad maxima de caminos arista-disjuntos equivale a la cantidad maxima de caminos vertice-disjuntos en el grafo. Llamemos a este número Y.
+
+Por propiedades del grafo, también sabemos una cota superior de la cantidad posible de caminos vertice-disjuntos entre s y t es la cantidad de vertices a los que conecta s. Llamemos a este numero Z.
+
+Siendo X el numero minimo de espías a remover para reducir en un 30% la cantidad maxima de mensajes que se le puede mandar a t desde s, tenemos que:
+
+X < Y <= Z
 
 Conociendo la máxima cantidad de mensajes sin repetir agentes que se pueden enviar desde la agencia hasta el agente destino, se calcula cual es el 30% de esa cantidad, siendo esta la cantidad (redondeando para arriba) de mensajes necesarios a suprimir por parte del enemigo.
 
