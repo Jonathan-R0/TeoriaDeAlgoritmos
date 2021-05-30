@@ -187,7 +187,7 @@ Puntos sumados: 8
 
 # Ejercicio 2
 
-Se tiene una red de flujo G(V,E) con s como fuente y t como sumidero.
+Se tiene una red de flujo $G(V,E)$ con $s$ como fuente y $t$ como sumidero.
 
 Por la propiedad de corte de grafo, sabemos que una cota superior de mensajes a enviar hasta el agente T es la cantidad de mensajes que se pueden enviar desde la agencia S.
 
