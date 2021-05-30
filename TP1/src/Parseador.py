@@ -32,9 +32,6 @@ class Parseador():
         t_inicio = int(tokens[1])
         t_final = int(tokens[2])
 
-        if t_final < t_inicio:
-            t_final += 168
-
         if (t_final - t_inicio) > 168:
             print(
                 "Los contratos no pueden exceder la duracion de una semana, omitiendo...", file=sys.stderr)
