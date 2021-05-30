@@ -19,6 +19,9 @@
   - [Parte 4](#parte-4)
     - [Complejidad Temporal](#complejidad-temporal)
     - [Complejidad Espacial](#complejidad-espacial)
+  - [Parte 5](#parte-5)
+  - [Parte 6](./Comparaciones.ipynb)
+
 
 # Ejercicio 1
 
