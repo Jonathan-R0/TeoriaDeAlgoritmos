@@ -2,7 +2,7 @@ import sys
 
 
 class JuegoCartas:
-    def __init__(self, cartas):
+    def __init__(self, cartas: list):
         self.cartas = cartas
         self.l = len(cartas)
         self.mejores = [[0 for _ in range(self.l)] for _ in range(self.l)]
@@ -73,3 +73,5 @@ if __name__ == "__main__":
 
     juego = JuegoCartas([int(x) for x in linea])
     print(juego)
+
+    print(juego.mejores)

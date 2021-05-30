@@ -13,6 +13,8 @@
 - [Ejercicio 1](#ejercicio-1)
   - [Parte 1](#parte-1)
   - [Parte 2](#parte-2)
+    - [Memoización](#memoización)
+    - [Traceback](#traceback)
   - [Parte 3](#parte-3)
   - [Parte 4](#parte-4)
     - [Complejidad Temporal](#complejidad-temporal)
@@ -55,6 +57,12 @@ MP(i,f) =  max{C[i] + min{MP(C[i+2],C[f]), MP(C[i+1], C[f-1])}, C[j] + min{MP(C[
 
 ## Parte 2
 
+El análisis del pseudocódigo y su respectiva presentación se dividirá en dos partes. Primero veremos como encontrar la máxima suma de cartas que podemos conseguir utilizando [_memoización_](https://en.wikipedia.org/wiki/Memoization) y luego, utilizando este recurso, generaremos el set de movimientos que realizó cada jugador.
+
+### Memoización
+
+Habiendo llegado a la relación de recurrencia pedida, nos damos cuenta de que para cada jugada debemos recorrer el árbol de decisiones que se forma en función de las jugadas futuras. Esto representa un costo temporal terrible pero afortunadamente lo podemos resolver con memoización. Computaremos en la matriz `mejores[i][j]` el resultado de `MP(i,j)` para evitar realizar cálculos ya previamente hechos en otras ramas del árbol de decisiones. 
+
 El algoritmo iterativo para resolver el problema es el siguiente:
 
 ```
@@ -72,23 +80,66 @@ def max_pick(cartas):
             c = mejores[i][f - 2] if i <= f - 2 else 0
 
             mejores[i][f] = max(cartas[i] + min(a, b), cartas[f] + min(b, c))
-
-    return mejores[0][l - 1]
 ```
 
-Donde la memoización ocurre guardando los datos de `MP(i,j)` en `mejores[i][j]`. Como la matriz se va llenando desde la diagonal hacia el tope superior derecho, devolvemos este mismo elemento (`mejores[0][len(cartas) - 1]`) que representa `MP(0,len(cartas) - 1)` es decir, lo que buscabamos originalmente.
+Donde la memoización ocurre guardando los datos de `MP(i,j)` en `mejores[i][j]`. Como la matriz se va llenando desde la diagonal hacia el tope superior derecho, la suma de las cartas que vamos a elegir es el elemento (`mejores[0][len(cartas) - 1]`) que representa `MP(0,len(cartas) - 1)`.
+
+### Traceback
+
+Tenemos el algorítmo de memoización, por lo que simplemente falta recorrer la matriz para llegar a obtener las jugadas.
+
+```
+def generarMisJugadas(cartas, mejores):
+    i = 0
+    f = len(cartas) - 1
+    picks = []
+    while f - i >= 2:
+        seleccionInicial = cartas[i] + min(mejores[i + 2][f], mejores[i + 1][f - 1])
+        seleccionFinal = cartas[f] + min(mejores[i + 1][f - 1], mejores[i][f - 2])
+        picks.append(i if seleccionInicial > seleccionFinal else f)
+        if seleccionInicial > seleccionFinal:
+            if mejores[i + 2][f] < mejores[i + 1][f - 1]:
+                i += 1
+            else:
+                f -= 1
+            i += 1
+        else:
+            if mejores[i + 1][f - 1] < mejores[i][f - 2]:
+                i += 1
+            else:
+                f -= 1
+            f -= 1
+    if f - i == 1:
+        picks.append(i if cartas[i] > cartas[f] else f)
+    else:
+        picks.append(i)
+
+    return [cartas[i] for i in picks]
+```
+
+En cada iteración del while vamos ingresando los índices de las cartas que son seleccionadas según el algorítmo de `MP(i,j)`. Si nos conviene más tomar del extremo `C[i]` agregamos `i` a la lista de resultados. ídem para `j`. Esto se calcula en función de [nuestra heurística antes analizada](#parte-1). Finalmente en el último condicional verificamos el caso base donde las carta posterior a `C[i]`es `C[j]`.
+
+## Parte 3
 
 ## Parte 4
  
 ### Complejidad Temporal
 
-Para la complejidad temporal, tenemos las primeras dos lineas que podemos suponer que ocurren en `O(1)` (y aun si ocurre en `O(n^2)` no afectará a lo que le sigue) y la última del retorno, la cual es `O(1)`.
+Para la complejidad temporal arrancamos viendo la parte de memoización. En las primeras dos lineas de este podemos suponer que las operaciones ocurren en `O(1)` (y aun si ocurre en `O(n^2)` no afectará a lo que le sigue).
 
-La sección importante a analizar es el nested loop. Loopeamos la cantidad de veces necesarias como para realizar (n*n)/2 (siendo que `n := len(cartas)`) escrituras dentro de la matriz de datos dinámicos. Por lo tanto `T(n) = O((n^2)/2) = O(n^2)/2 = O(n^2)`.
+La sección importante a analizar es el nested loop. Loopeamos la cantidad de veces necesarias como para realizar (n*n)/2 (siendo que `n := len(cartas)`) escrituras dentro de la matriz de datos dinámicos. Por lo tanto `T1(n) = O((n^2)/2) = O(n^2)/2 = O(n^2)`.
+
+Dentro de la generación de las jugadas recorremos la matriz. Tenemos un loop que comienza con `i := 0, f := len(cartas) - 1`, donde vamos actualizando `i := i + 1` ó `f := f - 1` tal que estas dos variables se van acercando cada vez mas. El ciclo corta cuando son casi el mismo número (pues su diferencia debe ser mayor a dos) por lo que loopeamos `T2(n) = O(n)` veces.
+
+Finalmente el tiempo total es `T(n) = T1(n) + T2(n) = O(n^2)`.
 
 ### Complejidad Espacial
 
-Por lo mismo que se dijo en la [sección anterior](#complejidad-temporal) de que realizamos (n*n)/2 escrituras concluimos que necesitamos una matriz de n^2 posiciones ⇒ `E(n) = O((n*2)/2) = O(n^2)/2 = O(n^2)`. 
+Por lo mismo que se dijo en la [sección anterior](#complejidad-temporal) de que realizamos (n*n)/2 escrituras concluimos que necesitamos una matriz de n^2 posiciones ⇒ `E1(n) = O((n*2)/2) = O(n^2)/2 = O(n^2)`. 
+
+En la función que genera los movimientos solamente tenemos los contadores y la lista de cartas. Esta lista tendrá la mitad (o mitad más uno si tenemos una cantidad de cartas impares) de cartas del mazo, lo cual es tamaño lineal `E2(n) = O(n/2) = O(n)`.
+
+Por lo tanto nuestro tiempo es cuadrático: `E(n) = E1(n) + E2(n) = O(n^2)`.
 
 ## Parte 5
 
