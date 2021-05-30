@@ -121,6 +121,25 @@ En cada iteración del while vamos ingresando los índices de las cartas que son
 
 ## Parte 3
 
+Veremos como se ejecuta el ejemplo con las cartas `7,5,1,8`. Primero el algorítmo genera la matriz de datos:
+
+```
+[[ 7  7  8 13]
+ [ 0  5  5  9]
+ [ 0  0  1  8]
+ [ 0  0  0  8]]
+```
+
+Donde la diagonal es el mazo y para cada posición guardamos la mejor jugada que podemos realizar en función de las coordenadas que evaluamos. Luego podemos ir viendo paso a paso como se ejecuta el algorítmo de generación de jugadas:
+
+Empezamos con `i := 0` y `f := len(cartas) - 1`. Siguiendo el algorítmo vemos que punta nos conviene tomar. 
+
+Tenemos que seleccionar el máximo entre `C[0] + min{mejores[2][3], mejores[1][3]} = 7 + min{1,5} = 8` y `C[3] = min{mejores[2][3], mejores[0][1]} = 8 + min{1,7} = 9` ⇒ la carta que nos generó el mayor valor fue `C[3]`; tomamos del extremo derecho (derecho viendo la pila de cartas de forma horizontal en vez de vertical).
+
+Ahora nos quedamos con `7,5,1` pero como en la iteración anterior (donde llegamos a que elegimos el extremo derecho) dentro de la predicción tuvimos que elegir entre `min{mejores[2][3], mejores[0][1]} = min{1,7}` ya que sabemos que el oponente nos dejará la peor pila de cartas posibles. Por lo tanto, como `mejores[0][1] = 7` resulta ser mejor que `mejores[2][3] = 1` para el oponente, vemos que el mismo eligirá `C[0]`. 
+
+Llegamos a la siguiente pila de cartas `5,1` donde nuestra selección es trivial y finalmente ganamos el juego. Nuestra selección de cartas fue `8,5` y el oponente jugó `7,1`. Sumamos `13`, el oponente `8` por lo que ganamos en nuestro ejemplo.
+
 ## Parte 4
  
 ### Complejidad Temporal

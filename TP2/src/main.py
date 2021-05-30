@@ -1,4 +1,5 @@
 import sys
+import numpy as np
 
 
 class JuegoCartas:
@@ -73,5 +74,3 @@ if __name__ == "__main__":
 
     juego = JuegoCartas([int(x) for x in linea])
     print(juego)
-
-    print(juego.mejores)
