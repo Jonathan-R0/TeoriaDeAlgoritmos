@@ -243,7 +243,7 @@ def minCantidadDeEspias(grafo, agencia, destino):
        
    return size(agentesEliminados)
     
-    ```
+   
           
 
     
