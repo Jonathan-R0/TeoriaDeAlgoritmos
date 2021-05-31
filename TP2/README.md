@@ -265,8 +265,22 @@ Representando el grafo como una matriz de adyacencia la complejidad de almacenar
 
 ## Parte 3
 
+Primero, cada vertice en este grafo, salvo 0 (fuente) y 5 (destino), representa en realidad 2 nodos: Uno para todas las aristas entrantes y otro para todas las aristas salientes. Estos vertices se conectan entre ellos por una arista del vértice entrante al saliente con capacidad 1. Por simplicidad en este gráfico, se representan como un solo vertice.
+
+Sea G(V,E) el grafo que se representa en la imagen. Calculando el Max-Flow podemos observar que la maxima cántidad de caminos vértice disjuntos para este grafo es de 2.
+
 <br><div align="center"><img src="media/0.png" style="max-width: 50%;"></div><br>
+
+En la primera iteración, eliminamos el vértice 1 y calculamos el Max-Flow nuevamente. Como podemos observar, la cantidad máxima de caminos vértice disjuntos sigue siendo 2, por lo que eliminar el vértice 1 no afectó (En lenguaje natural, el mensaje se transmitió por una vía alternativa: 0-2-4-5)
 <br><div align="center"><img src="media/1.png" style="max-width: 50%;"></div><br>
+
+En la segunda iteración, eliminamos el vértice 2 y calculamos el Max-Flow. Podemos observar que la cantidad máxima de caminos vértice disjuntos no cambio ya que sigue siendo 2, por lo que eliminar el vértice 2 no afectó.
 <br><div align="center"><img src="media/2.png" style="max-width: 50%;"></div><br>
+
+En una tercera iteración, removemos el vértice 3 y, calculando el Max-Flow, podemos observar que la cantidad máxima de caminos vértice disjuntos disminuyó a 1. Por el momento, guardamos a 3 como el vértice óptimo a remover en esta iteración.
 <br><div align="center"><img src="media/3.png" style="max-width: 50%;"></div><br>
+
+En la última iteración, removemos el vértice 4 y, tras calcular el Max-Flow, podemos observar que la cantidad máxima de caminos vértice disjuntos disminuyó también a 1.
 <br><div align="center"><img src="media/4.png" style="max-width: 50%;"></div><br>
+
+Finalmente, podemos concluir que la cantidad minima de espias a eliminar para reducir en un 30% la cantidad posibles de mensajes posibles al espia destino es 1. Además, nuestro algoritmo nos brinda información de que espias son los que deben ser eliminados. En este caso, podríamos eliminar tanto el vértice 4 como el vértice 3 para obtener el resultado buscado.
