@@ -264,3 +264,9 @@ Por lo tanto: `T(n) = O(|V|^3*|E|^2) + O(|V|) + O(|V|*|E|^2) = O(|V|^3*|E|^2)`. 
 Representando el grafo como una matriz de adyacencia la complejidad de almacenar la misma es `O(|V|^2)`. Almacenar los agentes en la lista es, a lo sumo, `O(|V|)`. Por lo tanto `E(|V|) = O(|V|^2)`. El costo en memoria de la solución es efectivamente polinomial.
 
 ## Parte 3
+
+<br><div align="center"><img src="media/0.png" style="max-width: 50%;"></div><br>
+<br><div align="center"><img src="media/1.png" style="max-width: 50%;"></div><br>
+<br><div align="center"><img src="media/2.png" style="max-width: 50%;"></div><br>
+<br><div align="center"><img src="media/3.png" style="max-width: 50%;"></div><br>
+<br><div align="center"><img src="media/4.png" style="max-width: 50%;"></div><br>
