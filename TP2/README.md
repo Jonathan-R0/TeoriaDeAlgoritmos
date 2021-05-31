@@ -191,7 +191,7 @@ Puntos sumados: 8
 
 Se tiene una red de flujo G(V,E) con s como fuente y t como sumidero: s sería la agencia y t seria el agente destino. Se remueve cualquier arista saliente de t para poder utilizar una red de flujo.
 
-El primer problema que se tiene que resolver, es como un vertice (un espia) solo puede ser utilizado una sola vez por la agencia. Lo que queremos encontrar es la cantidad maxima de caminos vertice-disjuntos que hay en el grafo. Este problema se puede pasar facilmente a encontrar la mayor cantidad de caminos arista-disjuntos en un grafo. Lo que debemos hacer es descomponer cada vertice (salvo s y t) en dos vertices: Un vertice que "reciba" todos los mensajes y otro que "emita" todos los mensajes. Luego, simplemente conectamos estos dos vertices por una arista de capacidad 1, asegurandonos que cada agente solo se pueda utilizar unicamente una vez.
+El primer problema que se tiene que resolver es como un vertice (un espia) solo puede ser utilizado una sola vez por la agencia. Lo que queremos encontrar es la cantidad maxima de caminos vertice-disjuntos que hay en el grafo. Este problema se puede pasar facilmente a encontrar la mayor cantidad de caminos arista-disjuntos en un grafo. Lo que debemos hacer es descomponer cada vertice (salvo s y t) en dos vertices: Un vertice que "reciba" todos los mensajes y otro que "emita" todos los mensajes. Luego, simplemente conectamos estos dos vertices por una arista de capacidad 1, asegurandonos que cada agente solo se pueda utilizar unicamente una vez.
 
 Asignandole una capacidad de 1 a cada arista, al aplicar un algoritmo que nos de el flujo maximo el resultado será la cantidad de caminos arista-disjuntos que hay en el grafo, y dado que reducimos nuestro problema original a este en un paso anterior, podemos determinar que la cantidad maxima de caminos arista-disjuntos equivale a la cantidad maxima de caminos vertice-disjuntos en el grafo. Llamemos a este número Y.
 
@@ -201,8 +201,49 @@ Siendo X el numero minimo de espías a remover para reducir en un 30% la cantida
 
 X < Y <= Z
 
-Conociendo la máxima cantidad de mensajes sin repetir agentes que se pueden enviar desde la agencia hasta el agente destino, se calcula cual es el 30% de esa cantidad, siendo esta la cantidad (redondeando para arriba) de mensajes necesarios a suprimir por parte del enemigo.
+Conociendo la máxima cantidad de mensajes sin repetir que se pueden enviar desde la agencia hasta el agente destino, se calcula cual es el 30% de esa cantidad, siendo esta la cantidad (redondeando para arriba) de mensajes necesarios a suprimir por parte del enemigo.
 
 Conociendo esto, se suprime un agente del grafo y se evalúa cuantos mensajes es posible enviar sin el agente el cuestión. Esto se repite para cada agente de la agencia y el rival eliminara aquel agente que minimice la cantidad de mensajes que puede enviar la agencia al agente T.
 
 Este proceso se repite hasta que la cantidad de mensajes que puede enviar la agencia sea menor al 70% de la cantidad original, minimizando de esta forma la cantidad de agentes a neutralizar por parte del rival y maximizando la cantidad de mensajes que no pueden enviarse al eliminar a un agente de la red.
+
+El pseudocódigo del algoritmo es asi:
+
+```
+
+def minCantidadDeEspias(grafo, agencia, destino):
+
+    grafoAux = transformarAProblemaAristaDisjunto(grafo)
+    
+    cantidadMaximaDeMensajes = MaximizeFlow(grafo, agencia, destino)
+    mensajesPosibles = cantidadMaximaDeMensajes
+    agentesEliminados = {}
+    
+    mientras mensajesPosibles > (cantidadMaximaDeMensajes * 0.7):
+    
+        maxPosibilidadesEliminadas = -infinito
+        agenteEliminado = None
+        
+        por cada agente en grafoAux:
+            
+            g' = grafoAux - {agente}
+            
+            cantidadPosible = MaximizeFlow(g', agencia, destino)
+            posibilidadesEliminadas = cantidadMaximaDeMensajes - cantidadPosible
+            
+            si posibilidadesEliminadas > maxPosibilidadesEliminadas:
+              
+                maxPosibilidadesEliminadas = posibilidadesEliminadas
+                agenteEliminad = agente
+         
+       mensajesPosibles -= maxPosibilidadesEliminadas
+       agentesEliminados += {agente} 
+       grafoAux -= {agenteEliminado}
+       
+       
+   return size(agentesEliminados)
+    
+    ```
+          
+
+    
