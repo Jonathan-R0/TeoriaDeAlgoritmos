@@ -21,7 +21,12 @@
     - [Complejidad Espacial](#complejidad-espacial)
   - [Parte 5](#parte-5)
   - [Parte 6](./Comparaciones.ipynb)
-
+- [Ejercicio 2](#ejercicio-2)
+  - [Parte 1](#parte-1)
+  - [Parte 2](#parte-2)
+    - [Complejidad Temporal](#complejidad-temporal)
+    - [Complejidad Espacial](#complejidad-espacial)
+  - [Parte 3](#parte-3)
 
 # Ejercicio 1
 
@@ -137,7 +142,7 @@ Donde la diagonal es el mazo y para cada posición guardamos la mejor jugada que
 
 Empezamos con `i := 0` y `f := len(cartas) - 1`. Siguiendo el algorítmo vemos que punta nos conviene tomar. 
 
-Tenemos que seleccionar el máximo entre `C[0] + min{mejores[2][3], mejores[1][3]} = 7 + min{1,5} = 8` y `C[3] = min{mejores[2][3], mejores[0][1]} = 8 + min{1,7} = 9` ⇒ la carta que nos generó el mayor valor fue `C[3]`; tomamos del extremo derecho (derecho viendo la pila de cartas de forma horizontal en vez de vertical).
+Tenemos que seleccionar el máximo entre `C[0] + min{mejores[2][3], mejores[1][3]} = 7 + min{1,5} = 8` y `C[3] + min{mejores[2][3], mejores[0][1]} = 8 + min{1,7} = 9` ⇒ la carta que nos generó el mayor valor fue `C[3]`; tomamos del extremo derecho (derecho viendo la pila de cartas de forma horizontal en vez de vertical).
 
 Ahora nos quedamos con `7,5,1` pero como en la iteración anterior (donde llegamos a que elegimos el extremo derecho) dentro de la predicción tuvimos que elegir entre `min{mejores[2][3], mejores[0][1]} = min{1,7}` ya que sabemos que el oponente nos dejará la peor pila de cartas posibles. Por lo tanto, como `mejores[0][1] = 7` resulta ser mejor que `mejores[2][3] = 1` para el oponente, vemos que el mismo eligirá `C[0]`. 
 
@@ -189,17 +194,17 @@ Puntos sumados: 8
 
 ## Parte 1
 
-Se tiene una red de flujo G(V,E) con s como fuente y t como sumidero: s sería la agencia y t seria el agente destino. Se remueve cualquier arista saliente de t para poder utilizar una red de flujo.
+Se tiene una red de flujo `G(V,E)` con `s` como fuente y `t` como sumidero: `s` sería la agencia y `t` seria el agente destino. Se remueve cualquier arista saliente de `t` para poder utilizar una red de flujo.
 
-El primer problema que se tiene que resolver es como un vertice (un espia) solo puede ser utilizado una sola vez por la agencia. Lo que queremos encontrar es la cantidad maxima de caminos vertice-disjuntos que hay en el grafo. Este problema se puede pasar facilmente a encontrar la mayor cantidad de caminos arista-disjuntos en un grafo. Lo que debemos hacer es descomponer cada vertice (salvo s y t) en dos vertices: Un vertice que "reciba" todos los mensajes y otro que "emita" todos los mensajes. Luego, simplemente conectamos estos dos vertices por una arista de capacidad 1, asegurandonos que cada agente solo se pueda utilizar unicamente una vez.
+El primer problema que se tiene que resolver es como un vertice (un espia) solo puede ser utilizado una sola vez por la agencia. Lo que queremos encontrar es la cantidad maxima de caminos vertice-disjuntos que hay en el grafo. Este problema se puede pasar facilmente a encontrar la mayor cantidad de caminos arista-disjuntos en un grafo. Lo que debemos hacer es descomponer cada vertice (salvo `s` y `t`) en dos vertices: Un vertice que "reciba" todos los mensajes y otro que "emita" todos los mensajes. Luego, simplemente conectamos estos dos vertices por una arista de capacidad 1, asegurandonos que cada agente solo se pueda utilizar unicamente una vez.
 
-Asignandole una capacidad de 1 a cada arista, al aplicar un algoritmo que nos de el flujo maximo el resultado será la cantidad de caminos arista-disjuntos que hay en el grafo, y dado que reducimos nuestro problema original a este en un paso anterior, podemos determinar que la cantidad maxima de caminos arista-disjuntos equivale a la cantidad maxima de caminos vertice-disjuntos en el grafo. Llamemos a este número Y.
+Asignandole una capacidad de 1 a cada arista, al aplicar un algoritmo que nos de el flujo maximo el resultado será la cantidad de caminos arista-disjuntos que hay en el grafo, y dado que reducimos nuestro problema original a este en un paso anterior, podemos determinar que la cantidad maxima de caminos arista-disjuntos equivale a la cantidad maxima de caminos vertice-disjuntos en el grafo. Llamemos a este número `Y`.
 
-Por propiedades del grafo, también sabemos una cota superior de la cantidad posible de caminos vertice-disjuntos entre s y t es la cantidad de vertices a los que conecta s. Llamemos a este numero Z.
+Por propiedades del grafo, también sabemos una cota superior de la cantidad posible de caminos vertice-disjuntos entre `s` y t es la cantidad de vertices a los que conecta `s`. Llamemos a este numero `Z`.
 
-Siendo X el numero minimo de espías a remover para reducir en un 30% la cantidad maxima de mensajes que se le puede mandar a t desde s, tenemos que:
+Siendo `X` el numero minimo de espías a remover para reducir en un 30% la cantidad maxima de mensajes que se le puede mandar a `t` desde `s`, tenemos que:
 
-X < Y <= Z
+`X < Y <= Z`
 
 Conociendo la máxima cantidad de mensajes sin repetir que se pueden enviar desde la agencia hasta el agente destino, se calcula cual es el 30% de esa cantidad, siendo esta la cantidad (redondeando para arriba) de mensajes necesarios a suprimir por parte del enemigo.
 
@@ -210,7 +215,6 @@ Este proceso se repite hasta que la cantidad de mensajes que puede enviar la age
 El pseudocódigo del algoritmo es asi:
 
 ```
-
 def minCantidadDeEspias(grafo, agencia, destino):
 
     grafoAux = transformarAProblemaAristaDisjunto(grafo)
@@ -219,31 +223,44 @@ def minCantidadDeEspias(grafo, agencia, destino):
     mensajesPosibles = cantidadMaximaDeMensajes
     agentesEliminados = {}
     
-    mientras mensajesPosibles > (cantidadMaximaDeMensajes * 0.7):
+    while mensajesPosibles > (cantidadMaximaDeMensajes * 0.7):
     
-        maxPosibilidadesEliminadas = -infinito
-        agenteEliminado = None
+        maxPosibilidadesEliminadas = -∞
+        agenteEliminado = ∅
         
-        por cada agente en grafoAux:
+        for agente in grafoAux.vertices:
             
             g' = grafoAux - {agente}
             
             cantidadPosible = MaximizeFlow(g', agencia, destino)
             posibilidadesEliminadas = cantidadMaximaDeMensajes - cantidadPosible
             
-            si posibilidadesEliminadas > maxPosibilidadesEliminadas:
+            if posibilidadesEliminadas > maxPosibilidadesEliminadas:
               
                 maxPosibilidadesEliminadas = posibilidadesEliminadas
                 agenteEliminad = agente
          
-       mensajesPosibles -= maxPosibilidadesEliminadas
-       agentesEliminados += {agente} 
-       grafoAux -= {agenteEliminado}
-       
+        mensajesPosibles -= maxPosibilidadesEliminadas
+        agentesEliminados += {agente} 
+        grafoAux -= {agenteEliminado}
        
    return size(agentesEliminados)
-    
-   
-          
+```
 
-    
+## Parte 2
+
+### Complejidad Temporal
+
+En primer lugar transformamos el problema a uno de arista disjunto. Para eso tenemos que duplicar la cantidad de vértices disponibles tal que para cada vértice `v` tendremos un `e = (v_in, v_out)` de capacidad 1. Esto es `O(|V|)`. Luego computamos el maxflow del grafo con el algorítmo de Edmonds–Karp el cual opera en tiempo `O(|V|*|E|^2)`.
+
+Posteriormente entramos en un while loop en el que iteramos hasta que conseguimos un grafo en el que la cantidad de mensajes reducidos sean menores al 70%. Dentro del mismo ejecutamos otro loop que puede llegar a ejecutarse `|V|` veces. Como computamos `|V|^2` veces el maxflow con Edmonds–Karp llegamos a una complejidad temporal de `O(|V|^3*|E|^2)`. 
+
+Por lo tanto: `T(n) = O(|V|^3*|E|^2) + O(|V|) + O(|V|*|E|^2) = O(|V|^3*|E|^2)`. El tiempo es polinomial, pues es un producto de dos polinomios.
+
+<br><div align="center"><img src="media/itiswhatitis.jpg" style="max-width: 50%;"></div><br>
+
+### Complejidad Espacial
+
+Representando el grafo como una matriz de adyacencia la complejidad de almacenar la misma es `O(|V|^2)`. Almacenar los agentes en la lista es, a lo sumo, `O(|V|)`. Por lo tanto `E(|V|) = O(|V|^2)`. El costo en memoria de la solución es efectivamente polinomial.
+
+## Parte 3
