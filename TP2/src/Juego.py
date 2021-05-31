@@ -1,5 +1,10 @@
 class JuegoCartas:
     def __init__(self, cartas: list):
+        '''
+        Inicializa el juego de cartas y ejecuta el algoritmo.
+        Al finalizar, guarda en _misJugadas las jugadas del primer jugador,
+        y en jugadas_del_oponente las jugadas del segundo jugador.
+        '''
 
         self.iteraciones = 0
 
@@ -8,9 +13,15 @@ class JuegoCartas:
         self.mejores = [[0 for _ in range(self.l)] for _ in range(self.l)]
         self._maxPick()
         self._misJugadas = self._generarMisJugadas()
-        self.opponents_plays = [p for p in cartas if p not in self._misJugadas]
+        self.jugadas_del_oponente = [
+            p for p in cartas if p not in self._misJugadas]
 
     def _maxPick(self):
+        '''
+        Genera la matriz de maximas puntuaciones por cada situacion posible en el juego.
+        Para la posicion ij (i >= j) alberga la maxima puntuacion cuando las cartas restantes
+        van desde la posicion i a la j originales del mazo.
+        '''
 
         for resto in range(self.l):
             for f in range(resto, self.l):
@@ -25,9 +36,16 @@ class JuegoCartas:
                 self.iteraciones += 1
 
     def getMaxPick(self) -> int:
+        '''
+        Devuelve la maxima puntuacion posible para el primer jugador.
+        '''
         return self.mejores[0][-1]
 
     def _generarMisJugadas(self) -> list:
+        '''
+        Genera las jugadas que llevaran al primer jugador a sumar la maxima puntuacion,
+        no necesariamente esto implicando que se vaya a ganar el juego.
+        '''
         i = 0
         f = self.l - 1
         picks = []
@@ -58,10 +76,13 @@ class JuegoCartas:
         return [self.cartas[i] for i in picks]
 
     def __str__(self) -> str:
+        '''
+        Imprime los resultados de la ejecucion del algoritmo.
+        '''
 
         return "Jugador 1: \nCartas elegidas: " + \
                ",".join([str(p) for p in self._misJugadas]) + "\n" + \
                "Puntos sumados: " + str(self.getMaxPick()) + "\n\n" + \
                "Jugador 2: \nCartas elegidas: " + \
-               ",".join([str(p) for p in self.opponents_plays]) + "\n" + \
-               "Puntos sumados: " + str(sum(self.opponents_plays))
+               ",".join([str(p) for p in self.jugadas_del_oponente]) + "\n" + \
+               "Puntos sumados: " + str(sum(self.jugadas_del_oponente))
