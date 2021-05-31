@@ -200,7 +200,7 @@ El primer problema que se tiene que resolver es como un vertice (un espia) solo 
 
 Asignandole una capacidad de 1 a cada arista, al aplicar un algoritmo que nos de el flujo maximo el resultado será la cantidad de caminos arista-disjuntos que hay en el grafo, y dado que reducimos nuestro problema original a este en un paso anterior, podemos determinar que la cantidad maxima de caminos arista-disjuntos equivale a la cantidad maxima de caminos vertice-disjuntos en el grafo. Llamemos a este número `Y`.
 
-Por propiedades del grafo, también sabemos una cota superior de la cantidad posible de caminos vertice-disjuntos entre `s` y t es la cantidad de vertices a los que conecta `s`. Llamemos a este numero `Z`.
+Por propiedades del grafo, también sabemos una cota superior de la cantidad posible de caminos vertice-disjuntos entre `s` y `t` es la cantidad de vertices a los que conecta `s`. Llamemos a este numero `Z`.
 
 Siendo `X` el numero minimo de espías a remover para reducir en un 30% la cantidad maxima de mensajes que se le puede mandar a `t` desde `s`, tenemos que:
 
