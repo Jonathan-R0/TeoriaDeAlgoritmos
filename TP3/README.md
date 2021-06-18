@@ -135,20 +135,18 @@ Para ello sabemos que 4SAT, que acabamos de demostrar que es NP-C, tiene la form
 4SAT(X1, X2, ..., Xn) = (Xa || Xb || Xc || Xd) && ... && (Xv || Xw || Xy || Xz) 
 ``` 
 
-tal que podemos establecer un isomorfismo que nos lleve de este problema al de los barcos.
-
-Recordemos que en el problema de los barcos queremos cumplir todas las `m` restricciones a la vez, que es algo que podemos pedir teniendo `m` términos en el 4SAT: 
+Podemos expresar que cada clausula del problema de 4SAT representa una restricción en nuestro problema de barcos, y cada elemento dentro de las clausulas los packs asociados a dicha restriccion. El elemento negado representaría que la no inclusión del pack hace que la restricción se cumpla. Por lo tanto, se podría expresar de la siguiente forma:
 
 ``` 
 4SAT(X1, X2, ..., Xn) = (Xa || Xb || Xc || Xd) && ... && (Xv || Xw || Xy || Xz) 
                       =      Restricción 1     && ... &&     Restricción M
 ``` 
-
-Por lo que cada restricción puede ser pensada en la fórmula como la suma lógica (or) de los packs que hacen o deshacen a la restricción.
-
 Aclaramos que las operaciones or en cada paréntesis son necesarias para cumplir con el pedido de la consigna que dice que una restricción puede ser cumplida por cualquier pack que la satisfaga. 
 
--p goteo 
+La reducción a nuestro problema de barcos se puede hacer de forma polinómica y encontrar una solución para el problema de barcos nos daría una solución para 4SAT.
+
+Por lo tanto, 4SAT <p Barcos, y como 4SAT es NP-Completo y Barcos es NP, podemos decir que nuestro problema de barcos es NP-Completo.
+
 
 ## 2 Pack
 
