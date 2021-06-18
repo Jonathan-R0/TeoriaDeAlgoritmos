@@ -167,6 +167,7 @@ Supongamos que existe un camino de X a ~X y un camino de ~X a X en el grafo.
 Tomemos como ejemplo caminos del estilo:
 
 X -> Y -> ~X
+
 ~X -> Z -> X
 
 y tomemos como punto de partida que X es TRUE. La arista entre X e Y existe si existe la clausula (~X v Y), y repetimos lo mismo para el resto de los ejes. Por lo tanto, llegamos a la siguiente expresión:
@@ -180,6 +181,8 @@ Miremos el caso de que X sea false:
 En la primera clausula, ~X es true, por lo que Y puede ser true o false. En la segunda clausula, ~X es true por lo que se cumple la clausula. En la tercera clausula, X es false, por lo que Z debe ser true. En la ultima clausula, ~Z es false, por lo que X debe ser True, lo cual es imposible.
 
 Por lo tanto, podemos observar que no existe solución ya que no hay manera de elegir un valor de X que resulte en que toda la expresión sea verdadera.
+
+Para saber si una solución es posible, basta con ver si se cumple esto para algun elemento del problema, lo cual es posible de hacer en tiempo polinomial. Por lo que 2-SAT pertenece a P, y como podemos reducir 2-SAT a nuestro problema, nuestro problema tambien pertenece a P.
 
 
 
