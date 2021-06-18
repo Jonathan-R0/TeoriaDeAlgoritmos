@@ -17,6 +17,11 @@
     - [Bin-Packing es NP-Hard](#bin-packing-es-np-hard)
     - [Mudanza es NP-Completo](#mudanza-es-np-completo)
 - [Ejercicio 2](#ejercicio-2)
+    - [Barcos es NP](#barcos-es-np)
+    - [4 Pack](#4-pack)
+        - [3SAT a 4SAT](#3sat-a-4sat)
+        - [4SAT a Barcos](#4sat-a-barcos)
+    - [2 Pack](#2-pack)
 - [Ejercicio 3](#ejercicio-3)
 
 # Ejercicio 1
@@ -57,5 +62,71 @@ Por lo tanto, como Bin-Packing es un problema que pertenece a NP y NP-Hard, es N
 Como `BIN-PACKING <p MUDANZA` y el problema de la mudanza es NP-Hard ⇒ Entonces es NP-Completo (Pues `NP-C = NP ∩ NP-Hard`).
 
 # Ejercicio 2
+
+Tenemos `n` packs que los clientes pueden comprar para sus barcos y `m` restricciones que deben cumplir, tal que cada pack puede activar o desactivar la validez de cierta restricción. Demostraremos en las siguientes partes como diferentes variaciones del problema son NP-C.
+
+## Barcos es NP
+
+La demostración de que este problema es NP es bastante trivial. Si tengo el set de packs que un cliente puede comprar y verificar que todas las restricciones se cumplan y ninguna se desactive (comprobación de los tokens):
+
+```
+def validarPacks(packs, restricciones):
+    i = 0
+    for pack in packs: 
+        restricciones[i].activarse(pack) 
+        /* Verifica si tengo alguna restricción por cubrir con mi i-ésimo pack. */
+        i++
+    j = 0
+    for pack in packs: 
+        restricciones[i].desactivarse(pack) 
+        /* Verifica si estoy rompiendo alguna restricción con mi j-ésimo pack. */
+        j++  
+    for restriccion in restricciones:
+        if restriccion.noActivada:
+            return False
+    return True
+```
+
+El pseudocódigo a lo sumo verificará todos los packs y restricciones. Esto resulta ser `O(n+m)` y como esto es polinomial vemos que nuestro problema pertenece a NP.
+
+## 4 Pack 
+
+Para este problema realizaremos el análisis tal que cada restricción a cumplir está atado a 4 packs, donde cada uno puede activarlo o desactivarlo. Para resolver el problema vamos a saltar de 3SAT a 4SAT y finalmente a nuestro problema demostrando que `3SAT <p BARCOS`.
+
+### 3SAT a 4SAT
+
+Primero supongamos que tenemos la siguiente instancia de 3SAT:
+
+``` 
+3SAT(X1, X2, ..., Xn) = (Xa || Xb || Xc) && ... && (Xw || Xy || Xz) 
+``` 
+
+Donde tengo una gran expresión booleana en su forma conjuntiva, tal que cada `Xi` pertenece a `{X1, X2, ..., Xn, ¬X1, ¬X2, ..., ¬Xn}`.
+
+Podemos analizar la siguiente expresión:
+
+(A || B || C) = (A || B || C || Z) && (A || B || C || ¬Z)
+ 
+Viendo como cada resultado de la expresión izquierda (dentro de su tabla de verdad):
+
+<br><div align="center"><img src="media/tt1.jpg" style="max-width: 50%;"></div><br>
+
+Mappea perfectamente a la expresión derecha (números rojos) independientemente del estado de veracidad de Z: 
+
+<br><div align="center"><img src="media/tt2.jpg" style="max-width: 50%;"></div><br>
+
+Llegamos a que podemos expresar nuestra función original como: 
+
+``` 
+(Xa || Xb || Xc) && ... && (Xw || Xy || Xz) = (Xa || Xb || Xc || Z) && (Xa || Xb || Xc || ¬Z) && ... && (Xw || Xy || Xz || T) && (Xw || Xy || Xz || ¬T) 
+``` 
+
+Por lo que nuestra función general de 3SAT es una instancia del problema de 4SAT donde la cuarta variable booleana de nuestra ecuación en forma conjuntiva tiene la restricción de siempre aparecer simétricamente sumando en un término (or) y sumando el negado en el otro (or not). Y habiendo demostrado que las expresiones booleanas matchean por tablas de verdad, cualquier solución de mi sistema de 3SAT puede resolver esta instancia particular de 4SAT y por lo tanto: `3SAT <p 4SAT` pues 4SAT es tan o más difícil que 3SAT.
+
+Por lo tanto 4SAT pertenece a NP-Hard y obviamente pertenece a NP (pues la verificación de la solución consiste en reemplazar los valores en la función y ver que evalue en True, algo que se resuelve en tiempo polinómico) por lo que es NP-C.
+
+### 4SAT a Barcos
+
+## 2 Pack
 
 # Ejercicio 3
