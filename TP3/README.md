@@ -135,7 +135,7 @@ Para ello sabemos que 4SAT, que acabamos de demostrar que es NP-C, tiene la form
 4SAT(X1, X2, ..., Xn) = (Xa || Xb || Xc || Xd) && ... && (Xv || Xw || Xy || Xz) 
 ``` 
 
-Podemos expresar que cada clausula del problema de 4SAT representa una restricción en nuestro problema de barcos, y cada elemento dentro de las clausulas los packs asociados a dicha restriccion. El elemento negado representaría que la no inclusión del pack hace que la restricción se cumpla. Por lo tanto, se podría expresar de la siguiente forma:
+Podemos expresar que cada clausula del problema de 4SAT representa una restricción en nuestro problema de barcos, y cada elemento dentro de las clausulases el pack asociado a dicha restriccion. El elemento negado representaría que la no inclusión del pack hace que la restricción se cumpla. Por lo tanto, se podría expresar de la siguiente forma:
 
 ``` 
 4SAT(X1, X2, ..., Xn) = (Xa || Xb || Xc || Xd) && ... && (Xv || Xw || Xy || Xz) 
@@ -149,5 +149,39 @@ Por lo tanto, 4SAT <p Barcos, y como 4SAT es NP-Completo y Barcos es NP, podemos
 
 
 ## 2 Pack
+
+Para este problema vamos a partir del problema 2SAT. Como vimos en el punto anterior, podemos pasar de un problema del estilo 2-SAT a nuestro problema de 2-Pack ya que podemos tomar las clausulas como las restricciones y los elementos dentro de las clausulas como los packs asociados a la restricción. Ahora debemos demostrar que 2-SAT es un problema que pertenece a P.
+
+Para demostrar que existe una solución polinomial, vamos a expresar el problema de 2SAT como un grafo. Supongamos que en nuestro problema de 2-SAT tenemos n variables y m clausulas. Sea ahora el Grafo G = (V, E) con 2n vertices. Estamos creando 2 vertices por cada variable X, una que sea ~X y otro que sea X. Por cada clausula (X v Y), donde X e Y son variables dentro de nuestro problema 2-SAT, creamos una arista dirigida que vaya de ~X a Y, y otra arista que vaya de ~Y a X. Esto se hace ya que para que exista solución, todas las clausulas deben evaluar a true, por lo que si X es false, Y debe ser true, y si Y es false, X debe ser true.
+
+Una vez que tenemos planteado el grafo, podemos decir que no existe a solución al problema de 2-SAT si se cumplen las siguientes condiciones:
+
+1. Existe un camino de X a ~X en el grafo.
+2. Existe un camino de ~X a X en el grafo.
+
+Esto se cumple debido a que el grafo expresa las condiciones necesarias para que exista solución, y si en el grafo existe un camino de X a ~X en el grafo (o viceversa) eso nos indicaría que tanto X como ~X deben ser true, lo cual sabemos que es imposible, y por lo tanto no existe solución.
+
+Demostremos que efectivamente esto ocurre.
+
+Supongamos que existe un camino de X a ~X y un camino de ~X a X en el grafo.
+Tomemos como ejemplo caminos del estilo:
+
+X -> Y -> ~X
+~X -> Z -> X
+
+y tomemos como punto de partida que X es TRUE. La arista entre X e Y existe si existe la clausula (~X v Y), y repetimos lo mismo para el resto de los ejes. Por lo tanto, llegamos a la siguiente expresión:
+
+(~X v Y) and (~Y v ~X) and (X v Z) and (~Z v X)
+
+Recordemos que X es true, por lo que necesariamente en la primera clausula Y debe ser True. En la segunda clausula, ~Y es false por lo que ~X debe ser true, lo cual es imposible.
+
+Miremos el caso de que X sea false:
+
+En la primera clausula, ~X es true, por lo que Y puede ser true o false. En la segunda clausula, ~X es true por lo que se cumple la clausula. En la tercera clausula, X es false, por lo que Z debe ser true. En la ultima clausula, ~Z es false, por lo que X debe ser True, lo cual es imposible.
+
+Por lo tanto, podemos observar que no existe solución ya que no hay manera de elegir un valor de X que resulte en que toda la expresión sea verdadera.
+
+
+
 
 # Ejercicio 3
