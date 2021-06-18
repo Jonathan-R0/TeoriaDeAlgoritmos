@@ -127,6 +127,29 @@ Por lo tanto 4SAT pertenece a NP-Hard y obviamente pertenece a NP (pues la verif
 
 ### 4SAT a Barcos
 
+Ahora solo falta pasar de 4SAT al problema de los Barcos.
+
+Para ello sabemos que 4SAT, que acabamos de demostrar que es NP-C, tiene la forma de: 
+
+``` 
+4SAT(X1, X2, ..., Xn) = (Xa || Xb || Xc || Xd) && ... && (Xv || Xw || Xy || Xz) 
+``` 
+
+tal que podemos establecer un isomorfismo que nos lleve de este problema al de los barcos.
+
+Recordemos que en el problema de los barcos queremos cumplir todas las `m` restricciones a la vez, que es algo que podemos pedir teniendo `m` términos en el 4SAT: 
+
+``` 
+4SAT(X1, X2, ..., Xn) = (Xa || Xb || Xc || Xd) && ... && (Xv || Xw || Xy || Xz) 
+                      =      Restricción 1     && ... &&     Restricción M
+``` 
+
+Por lo que cada restricción puede ser pensada en la fórmula como la suma lógica (or) de los packs que hacen o deshacen a la restricción.
+
+Aclaramos que las operaciones or en cada paréntesis son necesarias para cumplir con el pedido de la consigna que dice que una restricción puede ser cumplida por cualquier pack que la satisfaga. 
+
+-p goteo 
+
 ## 2 Pack
 
 # Ejercicio 3
