@@ -13,8 +13,8 @@
 - [Ejercicio 1](#ejercicio-1)
     - [Mudanza es NP](#mudanza-es-np)
     - [Bin-Packing](#bin-packing)
-    - [Bin-Packing es NP](#bin-packing-es-np)
-    - [Bin-Packing es NP-Hard](#bin-packing-es-np-hard)
+        - [Bin-Packing es NP](#bin-packing-es-np)
+        - [Bin-Packing es NP-Hard](#bin-packing-es-np-hard)
     - [Mudanza es NP-Completo](#mudanza-es-np-completo)
 - [Ejercicio 2](#ejercicio-2)
     - [Barcos es NP](#barcos-es-np)
@@ -63,31 +63,11 @@ Como `BIN-PACKING <p MUDANZA` y el problema de la mudanza es NP-Hard ⇒ Entonce
 
 # Ejercicio 2
 
-Tenemos `n` packs que los clientes pueden comprar para sus barcos y `m` restricciones que deben cumplir, tal que cada pack puede activar o desactivar la validez de cierta restricción. Demostraremos en las siguientes partes como diferentes variaciones del problema son NP-C.
+Tenemos `n` packs que los clientes pueden comprar para sus barcos y `m` restricciones que deben cumplir, tal que cada pack puede activar o desactivar la validez de cierta restricción. Demostraremos en las siguientes partes como diferentes variaciones del problema son NP-Completos.
 
 ## Barcos es NP
 
-La demostración de que este problema es NP es bastante trivial. Si tengo el set de packs que un cliente puede comprar y verificar que todas las restricciones se cumplan y ninguna se desactive (comprobación de los tokens):
-
-```
-def validarPacks(packs, restricciones):
-    i = 0
-    for pack in packs: 
-        restricciones[i].activarse(pack) 
-        /* Verifica si tengo alguna restricción por cubrir con mi i-ésimo pack. */
-        i++
-    j = 0
-    for pack in packs: 
-        restricciones[i].desactivarse(pack) 
-        /* Verifica si estoy rompiendo alguna restricción con mi j-ésimo pack. */
-        j++  
-    for restriccion in restricciones:
-        if restriccion.noActivada:
-            return False
-    return True
-```
-
-El pseudocódigo a lo sumo verificará todos los packs y restricciones. Esto resulta ser `O(n+m)` y como esto es polinomial vemos que nuestro problema pertenece a NP.
+La demostración de que este problema es NP es bastante trivial. Si tengo el set de packs que un cliente quiere comprar, verificar que todas las restricciones se cumplan se puede hacer en forma lineal iterando por todos packs verificando que no falte ninguna restricción por cumplir. Por lo tanto el problema de los barcos resulta ser NP.
 
 ## 4 Pack 
 
@@ -95,7 +75,7 @@ Para este problema realizaremos el análisis tal que cada restricción a cumplir
 
 ### 3SAT a 4SAT
 
-Primero supongamos que tenemos la siguiente instancia de 3SAT:
+Primero supongamos que tenemos la siguiente instancia de 3SAT (siendo que en este trabajo los caracteres `||` representan un `OR` lógico e `&&` representa el `AND` lógico):
 
 ``` 
 3SAT(X1, X2, ..., Xn) = (Xa || Xb || Xc) && ... && (Xw || Xy || Xz) 
@@ -105,8 +85,10 @@ Donde tengo una gran expresión booleana en su forma conjuntiva, tal que cada `X
 
 Podemos analizar la siguiente expresión:
 
+```
 (A || B || C) = (A || B || C || Z) && (A || B || C || ¬Z)
- 
+``` 
+
 Viendo como cada resultado de la expresión izquierda (dentro de su tabla de verdad):
 
 <br><div align="center"><img src="media/tt1.jpg" style="max-width: 50%;"></div><br>
@@ -123,19 +105,19 @@ Llegamos a que podemos expresar nuestra función original como:
 
 Por lo que nuestra función general de 3SAT es una instancia del problema de 4SAT donde la cuarta variable booleana de nuestra ecuación en forma conjuntiva tiene la restricción de siempre aparecer simétricamente sumando en un término (or) y sumando el negado en el otro (or not). Y habiendo demostrado que las expresiones booleanas matchean por tablas de verdad, cualquier solución de mi sistema de 3SAT puede resolver esta instancia particular de 4SAT y por lo tanto: `3SAT <p 4SAT` pues 4SAT es tan o más difícil que 3SAT.
 
-Por lo tanto 4SAT pertenece a NP-Hard y obviamente pertenece a NP (pues la verificación de la solución consiste en reemplazar los valores en la función y ver que evalue en True, algo que se resuelve en tiempo polinómico) por lo que es NP-C.
+En consecuencia 4SAT pertenece a NP-Hard y obviamente pertenece a NP (pues la verificación de la solución consiste en reemplazar los valores en la función y ver que evalue en TRUE, algo que se resuelve en tiempo polinómico) por lo que es NP-Completo.
 
 ### 4SAT a Barcos
 
 Ahora solo falta pasar de 4SAT al problema de los Barcos.
 
-Para ello sabemos que 4SAT, que acabamos de demostrar que es NP-C, tiene la forma de: 
+Para ello sabemos que 4SAT, que acabamos de demostrar que es NP-Completo, tiene la forma de: 
 
 ``` 
 4SAT(X1, X2, ..., Xn) = (Xa || Xb || Xc || Xd) && ... && (Xv || Xw || Xy || Xz) 
 ``` 
 
-Podemos expresar que cada clausula del problema de 4SAT representa una restricción en nuestro problema de barcos, y cada elemento dentro de las clausulases el pack asociado a dicha restriccion. El elemento negado representaría que la no inclusión del pack hace que la restricción se cumpla. Por lo tanto, se podría expresar de la siguiente forma:
+Podemos expresar que cada clausula del problema de 4SAT representa una restricción en nuestro problema de barcos, y cada elemento dentro de las clausulas es el pack asociado a dicha restriccion. El elemento negado representaría que la no inclusión del pack hace que la restricción se cumpla. Por lo tanto, se podría expresar de la siguiente forma:
 
 ``` 
 4SAT(X1, X2, ..., Xn) = (Xa || Xb || Xc || Xd) && ... && (Xv || Xw || Xy || Xz) 
@@ -145,46 +127,46 @@ Aclaramos que las operaciones or en cada paréntesis son necesarias para cumplir
 
 La reducción a nuestro problema de barcos se puede hacer de forma polinómica y encontrar una solución para el problema de barcos nos daría una solución para 4SAT.
 
-Por lo tanto, 4SAT <p Barcos, y como 4SAT es NP-Completo y Barcos es NP, podemos decir que nuestro problema de barcos es NP-Completo.
+Por lo tanto, `4SAT <p Barcos`, y como 4SAT es NP-Completo y Barcos es NP, podemos decir que nuestro problema de barcos es NP-Completo.
 
 
 ## 2 Pack
 
-Para este problema vamos a partir del problema 2SAT. Como vimos en el punto anterior, podemos pasar de un problema del estilo 2-SAT a nuestro problema de 2-Pack ya que podemos tomar las clausulas como las restricciones y los elementos dentro de las clausulas como los packs asociados a la restricción. Ahora debemos demostrar que 2-SAT es un problema que pertenece a P.
+Para este problema vamos a partir del problema 2SAT. Como vimos en el punto anterior, podemos pasar de un problema del estilo 2SAT a nuestro problema de 2-Pack ya que podemos tomar las clausulas como las restricciones y los elementos dentro de las clausulas como los packs asociados a la restricción. Ahora debemos demostrar que 2SAT es un problema que pertenece a P.
 
-Para demostrar que existe una solución polinomial, vamos a expresar el problema de 2SAT como un grafo. Supongamos que en nuestro problema de 2-SAT tenemos n variables y m clausulas. Sea ahora el Grafo G = (V, E) con 2n vertices. Estamos creando 2 vertices por cada variable X, una que sea ~X y otro que sea X. Por cada clausula (X v Y), donde X e Y son variables dentro de nuestro problema 2-SAT, creamos una arista dirigida que vaya de ~X a Y, y otra arista que vaya de ~Y a X. Esto se hace ya que para que exista solución, todas las clausulas deben evaluar a true, por lo que si X es false, Y debe ser true, y si Y es false, X debe ser true.
+Para demostrar que existe una solución polinomial, vamos a expresar el problema de 2SAT como un grafo. Supongamos que en nuestro problema de 2SAT tenemos `n` variables y `m` clausulas. Sea ahora el Grafo `G = (V, E)` con `2n` vertices. Estamos creando 2 vertices por cada variable `X`, una que sea `¬X` y otro que sea `X`. Por cada clausula `(X || Y)`, donde `X` e `Y` son variables dentro de nuestro problema 2SAT, creamos una arista dirigida que vaya de `¬X` a `Y`, y otra arista que vaya de `¬Y` a `X`. Esto se hace ya que para que exista solución, todas las clausulas deben evaluar a TRUE, por lo que si `X` es FALSE, `Y` debe ser TRUE, y si `Y` es FALSE, `X` debe ser TRUE.
 
-Una vez que tenemos planteado el grafo, podemos decir que no existe a solución al problema de 2-SAT si se cumplen las siguientes condiciones:
+Una vez que tenemos planteado el grafo, podemos decir que no existe a solución al problema de 2SAT si se cumplen las siguientes condiciones:
 
-1. Existe un camino de X a ~X en el grafo.
-2. Existe un camino de ~X a X en el grafo.
+1. Existe un camino de `X` a `¬X` en el grafo.
+2. Existe un camino de `¬X` a `X` en el grafo.
 
-Esto se cumple debido a que el grafo expresa las condiciones necesarias para que exista solución, y si en el grafo existe un camino de X a ~X en el grafo (o viceversa) eso nos indicaría que tanto X como ~X deben ser true, lo cual sabemos que es imposible, y por lo tanto no existe solución.
+Esto se cumple debido a que el grafo expresa las condiciones necesarias para que exista solución, y si en el grafo existe un camino de `X` a `¬X` en el grafo (o viceversa) eso nos indicaría que tanto `X` como `¬X` deben ser TRUE, lo cual sabemos que es imposible, y por lo tanto no existe solución.
 
 Demostremos que efectivamente esto ocurre.
 
-Supongamos que existe un camino de X a ~X y un camino de ~X a X en el grafo.
+Supongamos que existe un camino de `X` a `¬X` y un camino de `¬X` a `X` en el grafo.
 Tomemos como ejemplo caminos del estilo:
 
-X -> Y -> ~X
+```
+X → Y → ¬X 
+¬X → Z → X
+```
 
-~X -> Z -> X
+y tomemos como punto de partida que `X` es TRUE. La arista entre `X` e `Y` existe si existe la clausula `(¬X || Y)`, y repetimos lo mismo para el resto de los ejes. Por lo tanto, llegamos a la siguiente expresión:
 
-y tomemos como punto de partida que X es TRUE. La arista entre X e Y existe si existe la clausula (~X v Y), y repetimos lo mismo para el resto de los ejes. Por lo tanto, llegamos a la siguiente expresión:
+```
+(¬X || Y) && (¬Y || ¬X) && (X || Z) && (¬Z || X)
+```
 
-(~X v Y) and (~Y v ~X) and (X v Z) and (~Z v X)
+Recordemos que `X` es TRUE, por lo que necesariamente en la primera clausula `Y` debe ser TRUE. En la segunda clausula, `¬Y` es FALSE por lo que `¬X` debe ser TRUE, lo cual es imposible.
 
-Recordemos que X es true, por lo que necesariamente en la primera clausula Y debe ser True. En la segunda clausula, ~Y es false por lo que ~X debe ser true, lo cual es imposible.
+Miremos el caso de que `X` sea FALSE:
 
-Miremos el caso de que X sea false:
+En la primera clausula, `¬X` es TRUE, por lo que `Y` puede ser TRUE o FALSE. En la segunda clausula, `¬X` es TRUE por lo que se cumple la clausula. En la tercera clausula, `X` es FALSE, por lo que `Z` debe ser TRUE. En la ultima clausula, `¬Z` es FALSE, por lo que `X` debe ser TRUE, lo cual es imposible.
 
-En la primera clausula, ~X es true, por lo que Y puede ser true o false. En la segunda clausula, ~X es true por lo que se cumple la clausula. En la tercera clausula, X es false, por lo que Z debe ser true. En la ultima clausula, ~Z es false, por lo que X debe ser True, lo cual es imposible.
+Por lo tanto, podemos observar que no existe solución ya que no hay manera de elegir un valor de `X` que resulte en que toda la expresión sea verdadera.
 
-Por lo tanto, podemos observar que no existe solución ya que no hay manera de elegir un valor de X que resulte en que toda la expresión sea verdadera.
-
-Para saber si una solución es posible, basta con ver si se cumple esto para algun elemento del problema, lo cual es posible de hacer en tiempo polinomial. Por lo que 2-SAT pertenece a P, y como podemos reducir 2-SAT a nuestro problema, nuestro problema tambien pertenece a P.
-
-
-
+Para saber si una solución es posible, basta con ver si se cumple esto para algun elemento del problema, lo cual es posible de hacer en tiempo polinomial. Por lo que 2SAT pertenece a P, y como podemos reducir 2SAT a nuestro problema, nuestro problema tambien pertenece a P.
 
 # Ejercicio 3
