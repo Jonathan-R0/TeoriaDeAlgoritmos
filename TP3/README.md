@@ -23,6 +23,9 @@
         - [4SAT a Barcos](#4sat-a-barcos)
     - [2 Pack](#2-pack)
 - [Ejercicio 3](#ejercicio-3)
+    - [Reducción Polinomial](#reducción-polinomial)
+    - [Problemas P y NP](#problemas-p-y-np)
+    - [Caja Negra](#caja-negra)
 
 # Ejercicio 1
 
@@ -170,3 +173,33 @@ Por lo tanto, podemos observar que no existe solución ya que no hay manera de e
 Para saber si una solución es posible, basta con ver si se cumple esto para algun elemento del problema, lo cual es posible de hacer en tiempo polinomial. Por lo que 2SAT pertenece a P, y como podemos reducir 2SAT a nuestro problema, nuestro problema tambien pertenece a P.
 
 # Ejercicio 3
+
+## Reducción Polinomial
+
+La reducción polinomial consiste en transformar un problema en otro para resolver este nuevo problema y reutilizar la resolución del mismo para resolver a su vez el problema original. Se puede utilizar ademas para acotar y clasificar distintos tipos de problemas en función del tiempo de resolución.
+
+## Problemas P y NP
+
+Los problemas P son aquellos problemas que se pueden resolver en tiempo polinomial y NP son los problemas a los que se les puede verificar en tiempo polinomial la solución. 
+
+Ahora sabemos que si un problema Q existe en P entonces se puede resolver en `O(n^k)` por lo que podemos certificar la solución del mismo con el siguiente pseudocódigo:
+
+```
+function verificacion(instancia, token)
+    solucion = Algoritmo(instancia)
+    return (solucion == token)
+```
+
+El cual valida en tiempo polinomial. Por lo tanto P está contenido en NP. Pero no está demostrado el inverso. Si esto fuera así, los dos conjuntos serían iguales.
+
+## Caja Negra
+
+3.1 Si el problema B lo resolvemos con NA, significa que hay una reducción polinomial de tal forma que `B <p A` y por lo tanto podemos decir que al menos tan difícil de resolver que el problema B.
+
+3.2 En cambio si A se puede resolver con NB, entonces A es igual o menos complicado que B, por lo que pertenecería a P.
+
+3.3 Si A es NP-C:
+
+3.3.1 Si estoy reduciendo B en A significa que `B <p A`, por lo tanto B, ***en el peor caso***, es igual de complicado de resolver que A. Entonces en el peor caso, B sería NP-Hard.
+
+3.3.2 Si estoy reduciendo A en B significa que `A <p B`, por lo tanto B, es al menos tan difícil de resolver que A y por lo tanto B pertenecería a NP-Hard. 
