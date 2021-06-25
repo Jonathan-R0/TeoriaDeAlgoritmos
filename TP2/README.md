@@ -284,3 +284,42 @@ En la última iteración, removemos el vértice 4 y, tras calcular el Max-Flow, 
 <br><div align="center"><img src="media/4.png" style="max-width: 50%;"></div><br>
 
 Finalmente, podemos concluir que la cantidad minima de espias a eliminar para reducir en un 30% la cantidad posibles de mensajes posibles al espia destino es 1. Además, nuestro algoritmo nos brinda información de que espias son los que deben ser eliminados. En este caso, podríamos eliminar tanto el vértice 4 como el vértice 3 para obtener el resultado buscado.
+
+# Correcciones
+
+## Ejercicio 2
+
+En las correcciones, se remarcó que el algoritmo presentado no era óptimo ya que calculaba varias veces el flujo maximo en la parte greedy del algoritmo. Para mejorar esto, podemos utilizar el teorema de Menger y las propiedades del corte mínimo. El Teorema de Menger nos dice que la cantidad de vertices a eliminar para desconectar dos vertices no adyacentes es equivalente a la cantidad de caminos vertice-disjuntos entre esos vertices. Nosotros sabemos, como dijimos en la entrega original, que podemos reducir el problema de la cantidad de caminos vertice disjuntos a uno de cantidad de caminos arista disjuntos modificando el grafo para acomodarse a este problema. Luego, con todas las aristas de capacidad 1, calcular el flujo máximo nos da la cantidad de caminos arista disjuntos y a su vez, por como modificamos el grafo, la cantidad de caminos vertice-disjuntos. Podemos obtener un corte mínimo que atraviesa las aristas "artilugio" de los vertices que se conectan al espía destino. Luego, por propiedad, sabemos que si el flujo máximo es f, y sea e una arista que atraviesa el corte mínimo mencionado anteriormente, remover la arista e hace que el flujo maximo posible sea f - C(e). Por lo tanto, remover estas aristas de capacidad 1 efectivamente decrementan la cantidad de mensajes posibles entre la central y el espia destino. Ademas, remover esta arista "artilugio" es equivalente a eliminar el vertice en el grafo original, ya que por como esta formado el grafo, remover esta arista elimina cualquier posibilidad de que exista un camino que utilize este vertice.
+
+Por lo tanto, podemos calcular el flujo máximo y determinar la cantidad de espias a eliminar utilizando este numero. Los espias a eliminar serían aquellos que se encuentren en el corte mínimo que atraviesen los artilugios creados.
+
+El pseudocódigo es:
+```
+def minCantidadDeEspias(grafo, agencia, destino):
+
+    grafoAux = transformarAProblemaAristaDisjunto(grafo)
+    
+    cantidadMaximaDeMensajes = MaximizeFlow(grafoAux, agencia, destino)
+    mensajesPosibles = cantidadMaximaDeMensajes
+    agentesEliminados = {}
+    
+    agentesAEliminar = mensajesPosibles * 0.3
+    
+    corteMinimo = obtenerCorteMinimo(grafoAux)
+    eliminados = 0
+    
+    for arista in corteMinimo:
+        agente = obtenerAgenteAEliminar(arista)
+        agentesEliminados += {agente}
+        eliminados += 1
+        
+        if(eliminados == agentesAEliminar)
+          break
+          
+    return agentesAEliminar, agentesEliminados
+   
+```   
+
+La complejidad espacial del algoritmo es O(nxn) para almacenar el grafo auxiliar creado.
+
+La complejidad temporal es la complejidad de calcular el flujo máximo: `O(|V|*|E|^2)`
