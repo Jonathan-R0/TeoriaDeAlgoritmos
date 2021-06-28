@@ -329,3 +329,11 @@ La complejidad temporal es la complejidad de calcular el flujo máximo: `O(|V|*|
 ### Paso a Paso
 
 En esta imagen, podemos observar un grafo al que ya se le aplico la modificación para adaptarlo a nuestro problema. Podemos observar cuales son los "caminos" por los cuales el mensaje se transmite. La linea punteada en negro es el corte mínimo que atraviesa las aristas artilugio que creamos previamente. En este caso, el flujo máximo posible es 2, por lo que la cantidad de mensajes a eliminar es ceil(2 * 0,3) = 1. Al remover cualquier arista del corte mínimo, podemos observar que el flujo máximo posible se reduce en la capacidad de la arista que removemos. Como esta arista tiene capacidad 1, al remover esta arista estamos eliminando en 1 la cantidad de mensajes posibles que podemos enviar. En este caso, solo debemos eliminar una sola arista. 
+
+<br><div align="center"><img src="media/xd.png" style="max-width: 50%;"></div><br>
+
+Ahora observemos la siguiente imagen en la cual efectivamente removemos la arista perteneciente al corte mínimo. 
+<br><div align="center"><img src="media/xd2.png" style="max-width: 50%;"></div><br>
+
+Como podemos observar, la cantidad maxima posible de mensajes ahora es 1, ya que el flujo maximo se redujo en exactamente la capacidad de la arista que sacamos previamente. 
+
