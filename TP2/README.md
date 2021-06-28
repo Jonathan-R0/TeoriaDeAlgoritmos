@@ -289,7 +289,9 @@ Finalmente, podemos concluir que la cantidad minima de espias a eliminar para re
 
 ## Ejercicio 2
 
-En las correcciones, se remarcó que el algoritmo presentado no era óptimo ya que calculaba varias veces el flujo maximo en la parte greedy del algoritmo. Para mejorar esto, podemos utilizar el teorema de Menger y las propiedades del corte mínimo. El Teorema de Menger nos dice que la cantidad de vertices a eliminar para desconectar dos vertices no adyacentes es equivalente a la cantidad de caminos vertice-disjuntos entre esos vertices. Nosotros sabemos, como dijimos en la entrega original, que podemos reducir el problema de la cantidad de caminos vertice disjuntos a uno de cantidad de caminos arista disjuntos modificando el grafo para acomodarse a este problema. Luego, con todas las aristas de capacidad 1, calcular el flujo máximo nos da la cantidad de caminos arista disjuntos y a su vez, por como modificamos el grafo, la cantidad de caminos vertice-disjuntos. Podemos obtener un corte mínimo que atraviese las aristas "artilugio". Luego, por propiedad, sabemos que si el flujo máximo es f, y sea e una arista que atraviesa el corte mínimo mencionado anteriormente, remover la arista e hace que el flujo maximo posible sea f - C(e). Por lo tanto, remover estas aristas de capacidad 1 efectivamente decrementan la cantidad de mensajes posibles entre la central y el espia destino. Ademas, remover esta arista "artilugio" es equivalente a eliminar el vertice en el grafo original, ya que por como esta formado el grafo, remover esta arista elimina cualquier posibilidad de que exista un camino que utilize este vertice.
+En las correcciones, se remarcó que el algoritmo presentado no era óptimo ya que calculaba varias veces el flujo maximo en la parte greedy del algoritmo. Para mejorar esto, podemos utilizar el teorema de Menger y las propiedades del corte mínimo. El Teorema de Menger nos dice que la cantidad de vertices a eliminar para desconectar dos vertices no adyacentes es equivalente a la cantidad de caminos vertice-disjuntos entre esos vertices. Nosotros sabemos, como dijimos en la entrega original, que podemos reducir el problema de la cantidad de caminos vertice disjuntos a uno de cantidad de caminos arista disjuntos modificando el grafo para acomodarse a este problema. Luego, con todas las aristas de capacidad 1, calcular el flujo máximo nos da la cantidad de caminos arista disjuntos y a su vez, por como modificamos el grafo, la cantidad de caminos vertice-disjuntos. 
+
+Podemos obtener un corte mínimo que atraviese las aristas "artilugio". Luego, por propiedad, sabemos que si el flujo máximo es f, y sea e una arista que atraviesa el corte mínimo mencionado anteriormente, remover la arista e hace que el flujo maximo posible sea f - C(e). Por lo tanto, remover estas aristas de capacidad 1 efectivamente decrementan la cantidad de mensajes posibles entre la central y el espia destino ya que, como dijimos, el flujo es equivalente a la cantidad de caminos vertice disjuntos que hay en el grafo y esto, a su vez, equivale a la cantidad de mensajes posibles que podemos enviarle al espía. Ademas, remover esta arista "artilugio" es equivalente a eliminar el vertice en el grafo original, ya que por como esta formado el grafo, remover esta arista elimina cualquier posibilidad de que exista un camino que utilize este vertice.
 
 Por lo tanto, podemos calcular el flujo máximo y determinar la cantidad de espias a eliminar utilizando este numero. Los espias a eliminar serían aquellos que se encuentren en el corte mínimo que atraviesen los artilugios creados.
 
@@ -303,7 +305,7 @@ def minCantidadDeEspias(grafo, agencia, destino):
     mensajesPosibles = cantidadMaximaDeMensajes
     agentesEliminados = {}
     
-    agentesAEliminar = mensajesPosibles * 0.3
+    agentesAEliminar = ceil(mensajesPosibles * 0.3)
     
     corteMinimo = obtenerCorteMinimo(grafoAux)
     eliminados = 0
@@ -323,3 +325,7 @@ def minCantidadDeEspias(grafo, agencia, destino):
 La complejidad espacial del algoritmo es O(nxn) para almacenar el grafo auxiliar creado.
 
 La complejidad temporal es la complejidad de calcular el flujo máximo: `O(|V|*|E|^2)`
+
+### Paso a Paso
+
+En esta imagen, podemos observar un grafo al que ya se le aplico la modificación para adaptarlo a nuestro problema. Podemos observar cuales son los "caminos" por los cuales el mensaje se transmite. La linea punteada en negro es el corte mínimo que atraviesa las aristas artilugio que creamos previamente. En este caso, el flujo máximo posible es 2, por lo que la cantidad de mensajes a eliminar es ceil(2 * 0,3) = 1. Al remover cualquier arista del corte mínimo, podemos observar que el flujo máximo posible se reduce en la capacidad de la arista que removemos. Como esta arista tiene capacidad 1, al remover esta arista estamos eliminando en 1 la cantidad de mensajes posibles que podemos enviar. En este caso, solo debemos eliminar una sola arista. 
