@@ -203,3 +203,52 @@ El cual valida en tiempo polinomial. Por lo tanto P está contenido en NP. Pero 
 3.3.1 Si estoy reduciendo B en A significa que `B <p A`, por lo tanto B, ***en el peor caso***, es igual de complicado de resolver que A. Entonces en el peor caso, B sería NP-Hard.
 
 3.3.2 Si estoy reduciendo A en B significa que `A <p B`, por lo tanto B, es al menos tan difícil de resolver que A y por lo tanto B pertenecería a NP-Hard. 
+
+# Correcciones
+
+## Ejercicio 2
+
+### Barcos es NP
+
+En las correcciones, se remarcó que no se demostró correctamente que Barcos es NP. Podemos observar que efectivamente Barcos es NP en el sigueinte pseudocódigo:
+
+```
+
+function verificacion(restricciones, paquetesIncluidos, paquetesNoIncluidos):
+
+    foreach paquete in paquetesIncluidos:
+    
+        paquete.activarRestriccionesSiSeIncluye(restricciones)
+        
+    foreach paquete in paquetesNoIncluidos:
+        paquete.activarRestriccionesSiNoSeIncluye(restricciones)
+        
+    for each restriccion in restricciones:
+    
+        if not restriccion.estaActivada():
+            return False
+            
+    return True
+    
+```
+
+Observemos que son operaciones lineales, por lo que efectivamente Barcos resulta ser NP.
+
+### 3SAT a 4SAT
+
+La demostración de que 4SAT es NP es bastante simple. Si tenemos una función que recibe el valor (True/False) de cada variable, comprobar que la expresion evalue en True es O(1) ya que las operaciones logicas son en tiempo constante.
+
+La demostración de que podemos reducir 3SAT a 4SAT en tiempo polinomial es tambien bastante simple, por cada clausula en 3SAT basta con crear dos clausulas nuevas con la restricción de que la cuarta variable que aparece en la clausula Xi aparezca su complemento en la clausula Xi+1. Por ejemplo, si tuviesemos la expresion 3SAT = (X or Y or Z), su version 4SAT es (X or Y or Z or P) and (X or Y or Z or ~P). Por lo tanto, pasar de 3SAT a 4SAT se puede hacer en tiempo O(n), siendo n la cantidad de clausulas de la expresion 3SAT. Si resolvemos la instancia de 4SAT, los valores de las variables que aparecen en la expresion 4SAT que corresponden a aquellas de las clausulas 3SAT (En el caso de nuestro ejemplo, seria X/Y/Z) son los valores que satisfacen la expresion 3SAT.
+
+### 4SAT a Barcos
+
+La reduccion de 4SAT a Barcos tambien se puede hacer en forma polinomial. Por cada clausula creamos una restriccion, y por cada variable creamos un paquete. Luego, recorremos cada clausula y asociamos los paquetes a las restricciones. Ejemplo, sea una clausula i = (X or Y or ~Z), los paquetes asociados a X e Y se asocian positivamente con la restriccion asociada a la clausula i (Es decir, su inclusion hace que la restriccion se cumpla), mientras que el paquete asociado a la variable Z se asocia negativamente con la restriccion asociada a la clausula i (Es decir, su no inclusion hace que la restriccion se cumpla). 
+
+Por lo tanto, crear la restricciones es O(m) siendo m la cantidad de clausulas, crear los paquetes es O(n) siendo n la cantidad de variables. Luego, asociar los paquetes a las restricciones es O(4.m) = O(m) ya que cada clausula tiene exactamente 4 variables dentro. Entonces, la reduccion al problema de Barcos es polinomial.
+
+La solucion de nuestro problema de barcos nos diria que paquetes deben incluirse y cuales no deben incluirse. Los paquetes incluidos son las variables que deben ser True, mientras que los paquetes no incluidos son las variables que deben ser False. Si tenemos una tabla que correlacione las variables de 4SAT a los paquetes creados anteriormente, asignar los valores a las variables es O(n) siendo n la cantidad de paquetes.
+
+### 2SAT pertenece a P.
+
+Como dijimos en la primera entrega, para saber si existia una solucion bastaba con ver que para cada variable X, no exista un camino de X a ~X y de ~X a X. Para esto podemos usar BFS que corre en tiempo O(|V| + |E|). Como hay que hacer esto para cada variable, la complejidad total sería de O(n . (|V| + |E|)) siendo n la cantidad de variables, lo cual es polinomial, por lo que 2SAT pertenece a P.
+
