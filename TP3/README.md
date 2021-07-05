@@ -1,5 +1,5 @@
 # Teoría de Algoritmos
-## Trabajo Práctico 2 
+## Trabajo Práctico 3 
 
 | Padrón | Alumno                    |
 |--------|---------------------------|
