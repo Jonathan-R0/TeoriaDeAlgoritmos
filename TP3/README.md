@@ -252,5 +252,5 @@ La solucion de nuestro problema de barcos nos diria que paquetes deben incluirse
 
 Como dijimos en la primera entrega, para saber si existia una solucion bastaba con ver que para cada variable X, no exista un camino de X a ~X y de ~X a X. Para esto podemos usar BFS que corre en tiempo O(|V| + |E|). Como hay que hacer esto para cada variable, la complejidad total sería de O(n . (|V| + |E|)) siendo n la cantidad de variables, lo cual es polinomial, por lo que 2SAT pertenece a P.
 
-La reduccion de 2SAT a nuestro problema sigue la misma metodología que pasar de 4SAT al problema anterior. Por cada clausula creamos una restriccion -> O(m) siendo m la cantidad de clausulas, por cada variable creamos un paquete -> O(n) siendo n la cantidad de variables, y recorriendo cada clausula vinculamos los paquetes a las restricciones -> O(2.m) = O(m) ya que cada clausula tiene a lo sumo 2 variables.
+La reduccion de 2SAT a nuestro problema sigue la misma metodología que pasar de 4SAT al problema anterior. Por cada clausula creamos una restriccion ⇒ O(m) siendo m la cantidad de clausulas, por cada variable creamos un paquete ⇒ O(n) siendo n la cantidad de variables, y recorriendo cada clausula vinculamos los paquetes a las restricciones ⇒ O(2.m) = O(m) ya que cada clausula tiene a lo sumo 2 variables.
 
